@@ -1,0 +1,847 @@
+{
+  "source": "AIsa-team/docs/openapi/similarweb.json",
+  "revision": "286971377beec7304107a8515e5db129c113f802",
+  "sha256": "3ddebac85fe9511f569ef7c9dbf46219d24a229199dabcf08df77aa495a7e3fb",
+  "captured_at": "2026-09-05",
+  "operations": {
+    "/similarweb/website/traffic-engagement": {
+      "x-aisa-pricing": {
+        "model": "per_credit",
+        "currency": "USD",
+        "credit_price_usd": 0.1,
+        "credit_formula": "credits = 1 x metrics x periods",
+        "credit_rate": "1 credit / (metric x month)",
+        "cost_drivers": [
+          {
+            "param": "metrics",
+            "effect": "number of metrics requested"
+          },
+          {
+            "param": "periods",
+            "effect": "number of months in the date window"
+          }
+        ],
+        "cost_tier": "med",
+        "example": "minimal (1 metric + 1 month) = 1 credit ($0.10); cost grows with metrics and periods."
+      },
+      "summary": "Traffic & Engagement",
+      "description": "Traffic & Engagement. Response follows the SimilarWeb v5 envelope (meta + data). Date constraint: the start_date-end_date span must cover between 1 and 120 monthly buckets.",
+      "operationId": "get_similarweb_traffic_engagement",
+      "parameters": [
+        {
+          "name": "domain",
+          "in": "query",
+          "required": true,
+          "description": "Target domain, e.g. example.com.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "start_date",
+          "in": "query",
+          "required": true,
+          "description": "Start month, format YYYY-MM.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "end_date",
+          "in": "query",
+          "required": true,
+          "description": "End month, format YYYY-MM.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "granularity",
+          "in": "query",
+          "required": false,
+          "description": "Time granularity. Allowed: monthly. Default: monthly.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "monthly"
+            ],
+            "default": "monthly"
+          }
+        },
+        {
+          "name": "metrics",
+          "in": "query",
+          "required": true,
+          "description": "Comma-separated metrics, e.g. visits,pages_per_visit.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "country",
+          "in": "query",
+          "required": false,
+          "description": "Two-letter country code. Allowed: us, ww. Default: ww. Coverage is limited to ww and us on the current plan.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "us",
+              "ww"
+            ],
+            "default": "ww"
+          }
+        },
+        {
+          "name": "web_source",
+          "in": "query",
+          "required": false,
+          "description": "Traffic source device split. Allowed: desktop, mobile_web, total.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "desktop",
+              "mobile_web",
+              "total"
+            ]
+          }
+        },
+        {
+          "name": "main_domain_only",
+          "in": "query",
+          "required": false,
+          "description": "Restrict to the main domain only (true/false). Default: True.",
+          "schema": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        {
+          "name": "mtd",
+          "in": "query",
+          "required": false,
+          "description": "Month-to-date flag (true/false).",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "SimilarWeb v5 envelope (meta + data).",
+          "content": {
+            "application/json": {
+              "example": {
+                "meta": {
+                  "request": {
+                    "format": "json",
+                    "domain": "cnn.com",
+                    "granularity": "monthly",
+                    "country": "us",
+                    "start_date": "2026-06-01",
+                    "end_date": "2026-06-30",
+                    "web_source": "total",
+                    "metrics": [
+                      "visits",
+                      "pages_per_visit",
+                      "average_visit_duration",
+                      "bounce_rate",
+                      "new_users",
+                      "page_views",
+                      "returning_users",
+                      "unique_visitors"
+                    ],
+                    "state": null,
+                    "mtd": false,
+                    "main_domain_only": true
+                  },
+                  "status": "success",
+                  "last_updated": "2026-07-31"
+                },
+                "data": [
+                  {
+                    "date": "2026-06-01",
+                    "visits": 182538329.78179574,
+                    "bounce_rate": 0.6402229356798581,
+                    "average_visit_duration": 194.8333714917004,
+                    "pages_per_visit": 1.9970684926970637,
+                    "page_views": 364541547.1167704,
+                    "unique_visitors": 32705292.619999997,
+                    "new_users": 10074246.080150243,
+                    "returning_users": 22631046.540221456
+                  }
+                ]
+              },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "meta": {
+                    "$ref": "#/components/schemas/SimilarWebMeta"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "string"
+                        },
+                        "visits": {
+                          "type": "number"
+                        },
+                        "bounce_rate": {
+                          "type": "number"
+                        },
+                        "average_visit_duration": {
+                          "type": "number"
+                        },
+                        "pages_per_visit": {
+                          "type": "number"
+                        },
+                        "page_views": {
+                          "type": "number"
+                        },
+                        "unique_visitors": {
+                          "type": "number"
+                        },
+                        "new_users": {
+                          "type": "number"
+                        },
+                        "returning_users": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/similarweb/website/similar-sites": {
+      "x-aisa-pricing": {
+        "model": "per_credit",
+        "currency": "USD",
+        "credit_price_usd": 0.1,
+        "credit_formula": "credits = ceil(5 x rows); rows capped at 20",
+        "credit_rate": "5 / row (max 20 rows)",
+        "cost_drivers": [
+          {
+            "param": "limit",
+            "effect": "charge scales with rows returned at 5 credit/row; at most 20 rows are billed"
+          }
+        ],
+        "cost_tier": "high",
+        "example": "20 rows = 100 credits ($10.00); limit=5 = 25 credits ($2.50)"
+      },
+      "summary": "SimilarSites",
+      "description": "SimilarSites. Response follows the SimilarWeb v5 envelope (meta + data). Date window (upstream SimilarWeb constraint): start_date and end_date must span EXACTLY 3 consecutive months — a 1- or 2-month span is rejected with upstream error 120 ('must span exactly 3 month(s)'). That span must also be SimilarWeb's most recent supported window, which advances forward each month; an older or out-of-range span is rejected with error 101 ('Dates not in range'). In practice, request the three most recent completed months (e.g. if the latest published month is 2026-07, use start_date=2026-05 and end_date=2026-07). To read the exact currently-supported range, call SimilarWeb's /describe endpoint for this API.",
+      "operationId": "get_similarweb_similar_sites",
+      "parameters": [
+        {
+          "name": "domain",
+          "in": "query",
+          "required": true,
+          "description": "Target domain, e.g. example.com.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "start_date",
+          "in": "query",
+          "required": true,
+          "description": "Start month, format YYYY-MM. Must be exactly 2 months before end_date: the window has to span exactly 3 consecutive months within SimilarWeb's latest supported range (see the endpoint description).",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "end_date",
+          "in": "query",
+          "required": true,
+          "description": "End month, format YYYY-MM. Together with start_date must span exactly 3 consecutive months, and must be the most recent supported month (the window rolls forward monthly; see the endpoint description).",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "granularity",
+          "in": "query",
+          "required": false,
+          "description": "Time granularity. Allowed: monthly.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "monthly"
+            ]
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": true,
+          "description": "Number of rows to return; max 20, billed as 20 if exceeded.",
+          "schema": {
+            "type": "integer",
+            "default": 20,
+            "maximum": 20
+          }
+        },
+        {
+          "name": "country",
+          "in": "query",
+          "required": false,
+          "description": "Two-letter country code. Allowed: us, ww. Default: ww. Coverage is limited to ww and us on the current plan.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "us",
+              "ww"
+            ],
+            "default": "ww"
+          }
+        },
+        {
+          "name": "web_source",
+          "in": "query",
+          "required": false,
+          "description": "Traffic source device split. Allowed: desktop, mobile_web, total.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "desktop",
+              "mobile_web",
+              "total"
+            ]
+          }
+        },
+        {
+          "name": "main_domain_only",
+          "in": "query",
+          "required": false,
+          "description": "Restrict to the main domain only (true/false).",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "offset",
+          "in": "query",
+          "required": false,
+          "description": "Row offset for pagination.",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "traffic_source",
+          "in": "query",
+          "required": false,
+          "description": "Traffic-source filter.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "SimilarWeb v5 envelope (meta + data).",
+          "content": {
+            "application/json": {
+              "example": {
+                "meta": {
+                  "query": {
+                    "limit": 5,
+                    "offset": 0,
+                    "asc": null,
+                    "sort": null
+                  },
+                  "request": {
+                    "format": "json",
+                    "domain": "cnn.com",
+                    "granularity": "monthly",
+                    "start_date": "2026-05-01",
+                    "end_date": "2026-07-31",
+                    "metrics": [
+                      "rank",
+                      "affinity",
+                      "has_adsense"
+                    ],
+                    "category": null
+                  },
+                  "status": "success",
+                  "last_updated": "2026-07-31"
+                },
+                "data": [
+                  {
+                    "domain": "bbc.com",
+                    "category": "News_and_Media",
+                    "rank": 95,
+                    "affinity": 1,
+                    "has_adsense": true
+                  }
+                ]
+              },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "meta": {
+                    "$ref": "#/components/schemas/SimilarWebMeta"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "domain": {
+                          "type": "string"
+                        },
+                        "category": {
+                          "type": "string"
+                        },
+                        "rank": {
+                          "type": "integer"
+                        },
+                        "affinity": {
+                          "type": "number"
+                        },
+                        "has_adsense": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/similarweb/search/website-keywords": {
+      "x-aisa-pricing": {
+        "model": "per_credit",
+        "currency": "USD",
+        "credit_price_usd": 0.1,
+        "credit_formula": "credits = ceil(0.1 x rows); rows capped at 20",
+        "credit_rate": "0.1 / row (max 20 rows)",
+        "cost_drivers": [
+          {
+            "param": "limit",
+            "effect": "charge scales with rows returned at 0.1 credit/row; at most 20 rows are billed"
+          }
+        ],
+        "cost_tier": "med",
+        "example": "20 rows = 2 credits ($0.20); limit=5 = 1 credit ($0.10)"
+      },
+      "summary": "Website Keywords",
+      "description": "Website Keywords. Response follows the SimilarWeb v5 envelope (meta + data). Date constraint: the start_date-end_date span must cover between 1 and 3 monthly buckets. Note: `data` may arrive grouped as an array of arrays; billing counts rows across all groups.",
+      "operationId": "get_similarweb_keywords",
+      "parameters": [
+        {
+          "name": "domain",
+          "in": "query",
+          "required": true,
+          "description": "Target domain, e.g. example.com.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "start_date",
+          "in": "query",
+          "required": true,
+          "description": "Start month, format YYYY-MM.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "end_date",
+          "in": "query",
+          "required": true,
+          "description": "End month, format YYYY-MM.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "granularity",
+          "in": "query",
+          "required": true,
+          "description": "Time granularity. Allowed: monthly.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "monthly"
+            ]
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": true,
+          "description": "Number of rows to return; max 20, billed as 20 if exceeded.",
+          "schema": {
+            "type": "integer",
+            "maximum": 20,
+            "default": 20
+          }
+        },
+        {
+          "name": "country",
+          "in": "query",
+          "required": false,
+          "description": "Two-letter country code. Allowed: us, ww. Default: ww. Coverage is limited to ww and us on the current plan.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "us",
+              "ww"
+            ],
+            "default": "ww"
+          }
+        },
+        {
+          "name": "web_source",
+          "in": "query",
+          "required": false,
+          "description": "Traffic source device split. Allowed: total.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "total"
+            ]
+          }
+        },
+        {
+          "name": "main_domain_only",
+          "in": "query",
+          "required": false,
+          "description": "Restrict to the main domain only (true/false).",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "format",
+          "in": "query",
+          "required": false,
+          "description": "Response format. Allowed: json.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "json"
+            ]
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "SimilarWeb v5 envelope (meta + data).",
+          "content": {
+            "application/json": {
+              "example": {
+                "meta": {
+                  "query": {
+                    "limit": 5,
+                    "offset": 0,
+                    "asc": null,
+                    "sort": null
+                  },
+                  "request": {
+                    "branded_type": "all",
+                    "keywords_filter_rules": [],
+                    "format": "json",
+                    "domain": "nike.com",
+                    "granularity": "monthly",
+                    "country": "us",
+                    "start_date": "2026-06-01",
+                    "end_date": "2026-06-30",
+                    "traffic_source": "all",
+                    "web_source": "total",
+                    "metrics": [
+                      "clicks",
+                      "traffic_share",
+                      "competition",
+                      "primary_intent",
+                      "secondary_intent",
+                      "position",
+                      "serp_features",
+                      "top_url",
+                      "url_count"
+                    ]
+                  },
+                  "status": "success",
+                  "last_updated": "2026-07-31"
+                },
+                "data": [
+                  {
+                    "keyword": "nike",
+                    "clicks": 1001887.5658500849,
+                    "traffic_share": 0.15853772273003125,
+                    "competition": 100,
+                    "primary_intent": "Navigational",
+                    "secondary_intent": null,
+                    "position": 1,
+                    "serp_features": [
+                      "organic_sitelinks",
+                      "organic_expanded_sitelinks",
+                      "apps",
+                      "pla",
+                      "images",
+                      "related_searches",
+                      "popular_products",
+                      "paid_sitelinks",
+                      "paid",
+                      "news",
+                      "video",
+                      "organic",
+                      "local_pack",
+                      "related_questions"
+                    ],
+                    "top_url": "nike.com",
+                    "url_count": 1581
+                  }
+                ]
+              },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "meta": {
+                    "$ref": "#/components/schemas/SimilarWebMeta"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "keyword": {
+                          "type": "string"
+                        },
+                        "clicks": {
+                          "type": "number"
+                        },
+                        "traffic_share": {
+                          "type": "number"
+                        },
+                        "competition": {
+                          "type": "integer"
+                        },
+                        "primary_intent": {
+                          "type": "string"
+                        },
+                        "secondary_intent": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "integer"
+                        },
+                        "serp_features": {
+                          "type": "string"
+                        },
+                        "top_url": {
+                          "type": "string"
+                        },
+                        "url_count": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/similarweb/website-top-geographies": {
+      "x-aisa-pricing": {
+        "model": "per_credit",
+        "currency": "USD",
+        "credit_price_usd": 0.1,
+        "credit_formula": "credits = ceil(3 x rows); rows capped at 10",
+        "credit_rate": "3 / row (max 10 rows)",
+        "cost_drivers": [
+          {
+            "param": "limit",
+            "effect": "charge scales with rows returned at 3 credit/row; at most 10 rows are billed"
+          }
+        ],
+        "cost_tier": "high",
+        "example": "10 rows = 30 credits ($3.00); limit=5 = 15 credits ($1.50)"
+      },
+      "summary": "Website Top Geographies",
+      "description": "Top countries by share of a domain's traffic for the latest available month (data.countries, up to 10 rows with country_code, country_name, share and visits). Geography coverage is worldwide (ww) and fixed: a country parameter is not accepted for this endpoint.",
+      "operationId": "get_similarweb_website_top_geographies",
+      "parameters": [
+        {
+          "name": "domain",
+          "in": "query",
+          "required": true,
+          "description": "Target domain, e.g. example.com.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "SimilarWeb traffic response (meta + data). data.countries is ranked by traffic share (highest first).",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "meta": {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string"
+                      },
+                      "end_date": {
+                        "type": "string"
+                      },
+                      "granularity": {
+                        "type": "string"
+                      },
+                      "request_id": {
+                        "type": "string"
+                      },
+                      "retrieved_at": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "start_date": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "countries": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "country_code": {
+                              "type": "string"
+                            },
+                            "country_name": {
+                              "type": "string"
+                            },
+                            "rank": {
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "share": {
+                              "type": "number"
+                            },
+                            "visits": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "example": {
+                "data": {
+                  "countries": [
+                    {
+                      "country_code": "us",
+                      "country_name": "United States",
+                      "rank": null,
+                      "share": 0.8135986038373749,
+                      "visits": 184871830.97664917
+                    },
+                    {
+                      "country_code": "ca",
+                      "country_name": "Canada",
+                      "rank": null,
+                      "share": 0.1250244855835728,
+                      "visits": 28408978.896636344
+                    },
+                    {
+                      "country_code": "gb",
+                      "country_name": "United Kingdom",
+                      "rank": null,
+                      "share": 0.0046361238147776184,
+                      "visits": 1053453.9934433121
+                    },
+                    {
+                      "country_code": "in",
+                      "country_name": "India",
+                      "rank": null,
+                      "share": 0.004525631464841616,
+                      "visits": 1028347.1127957336
+                    },
+                    {
+                      "country_code": "au",
+                      "country_name": "Australia",
+                      "rank": null,
+                      "share": 0.0038766416446363557,
+                      "visits": 880878.8947080157
+                    },
+                    {
+                      "country_code": "za",
+                      "country_name": "South Africa",
+                      "rank": null,
+                      "share": 0.0032450884260539874,
+                      "visits": 737372.7488913544
+                    },
+                    {
+                      "country_code": "sg",
+                      "country_name": "Singapore",
+                      "rank": null,
+                      "share": 0.0029357496450864123,
+                      "visits": 667082.5264649267
+                    },
+                    {
+                      "country_code": "de",
+                      "country_name": "Germany",
+                      "rank": null,
+                      "share": 0.002332122537702222,
+                      "visits": 529921.9560768788
+                    },
+                    {
+                      "country_code": "nl",
+                      "country_name": "Netherlands",
+                      "rank": null,
+                      "share": 0.0022503248115619393,
+                      "visits": 511335.2779164732
+                    },
+                    {
+                      "country_code": "nz",
+                      "country_name": "New Zealand",
+                      "rank": null,
+                      "share": 0.002059521596153513,
+                      "visits": 467979.5744744864
+                    }
+                  ]
+                },
+                "meta": {
+                  "country": "ww",
+                  "end_date": "2026-07",
+                  "granularity": "monthly",
+                  "request_id": "imc_7d699adfa9e84a0e867521b2d071c2bb35f887a6f6b7c1e5d95067a1dfc2f2fa",
+                  "retrieved_at": "2026-08-27T14:47:22.508241524Z",
+                  "source": "similarweb",
+                  "start_date": "2026-07"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

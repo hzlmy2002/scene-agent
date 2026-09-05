@@ -1,0 +1,1532 @@
+{
+  "at": "2026-09-05T19:47:32.498Z",
+  "requests": [
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/website-top-geographies?domain=estk.me",
+      "status": 404,
+      "request_id": "imc_664ccfae120ba90a9cb90cdb3edaa878f2d2624b8f1afdab60e0c4c502557be9",
+      "ms": 1670,
+      "body": {
+        "meta": {
+          "request": {
+            "format": "json",
+            "domain": "estk.me",
+            "granularity": "monthly",
+            "start_date": "2026-07-01",
+            "end_date": "2026-07-31",
+            "web_source": "total",
+            "metrics": [
+              "rank",
+              "share",
+              "visits"
+            ],
+            "main_domain_only": true
+          },
+          "status": "error",
+          "error_code": 401,
+          "error_message": "Data not found"
+        },
+        "data": null
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/website-top-geographies?domain=wikipedia.org",
+      "status": 200,
+      "request_id": "imc_31c75e88d94e357b961cdadab9c6c9881a55d3a2f226bbb5d07d580b2b1e0607",
+      "ms": 2122,
+      "body": {
+        "data": {
+          "countries": [
+            {
+              "country_code": "us",
+              "country_name": "United States",
+              "rank": null,
+              "share": 0.36968358508040755,
+              "visits": 14992803.05578991
+            },
+            {
+              "country_code": "in",
+              "country_name": "India",
+              "rank": null,
+              "share": 0.08445194729632782,
+              "visits": 3425013.8891517064
+            },
+            {
+              "country_code": "gb",
+              "country_name": "United Kingdom",
+              "rank": null,
+              "share": 0.05263500147154518,
+              "visits": 2134653.0999812903
+            },
+            {
+              "country_code": "de",
+              "country_name": "Germany",
+              "rank": null,
+              "share": 0.03342404660550102,
+              "visits": 1355538.0014366196
+            },
+            {
+              "country_code": "ca",
+              "country_name": "Canada",
+              "rank": null,
+              "share": 0.026555539474327493,
+              "visits": 1076980.3947130882
+            },
+            {
+              "country_code": "vn",
+              "country_name": "Vietnam",
+              "rank": null,
+              "share": 0.019719241463943885,
+              "visits": 799729.0537370567
+            },
+            {
+              "country_code": "au",
+              "country_name": "Australia",
+              "rank": null,
+              "share": 0.018736916394880825,
+              "visits": 759890.1025593237
+            },
+            {
+              "country_code": "ru",
+              "country_name": "Russian Federation",
+              "rank": null,
+              "share": 0.017159572207739116,
+              "visits": 695919.6919070168
+            },
+            {
+              "country_code": "ph",
+              "country_name": "Philippines",
+              "rank": null,
+              "share": 0.01690939394600218,
+              "visits": 685773.5194545777
+            },
+            {
+              "country_code": "tw",
+              "country_name": "Taiwan",
+              "rank": null,
+              "share": 0.015884649655088824,
+              "visits": 644214.2240023132
+            }
+          ]
+        },
+        "meta": {
+          "country": "ww",
+          "end_date": "2026-07",
+          "granularity": "monthly",
+          "request_id": "imc_31c75e88d94e357b961cdadab9c6c9881a55d3a2f226bbb5d07d580b2b1e0607",
+          "retrieved_at": "2026-09-05T19:47:34.528199708Z",
+          "source": "similarweb",
+          "start_date": "2026-07"
+        }
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/website-traffic-snapshot?domain=wikipedia.org",
+      "status": 200,
+      "request_id": "imc_6f123b083918352aab0b1256be492ab0941718fc2f21801f6673733680c04902",
+      "ms": 613,
+      "body": {
+        "data": {
+          "domain": "wikipedia.org",
+          "metrics": {
+            "average_visit_duration": 83.90847325355806,
+            "bounce_rate": 0.7988038149813301,
+            "pages_per_visit": 1.3079659420209904,
+            "visits": 40555771.64289373
+          },
+          "month": "2026-07"
+        },
+        "meta": {
+          "country": "ww",
+          "end_date": "2026-07",
+          "granularity": "monthly",
+          "request_id": "imc_6f123b083918352aab0b1256be492ab0941718fc2f21801f6673733680c04902",
+          "retrieved_at": "2026-09-05T19:47:35.127712105Z",
+          "source": "similarweb",
+          "start_date": "2026-07"
+        }
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/website/traffic-engagement?domain=wikipedia.org&country=ww&web_source=total&granularity=monthly&start_date=2026-07&end_date=2026-07&metrics=visits%2Cpages_per_visit%2Caverage_visit_duration%2Cbounce_rate&main_domain_only=true",
+      "status": 200,
+      "request_id": "imc_ac10c6761a978fa96ac426ede97c811c48946e642a1700157b3a10797044da93",
+      "ms": 605,
+      "body": {
+        "meta": {
+          "request": {
+            "format": "json",
+            "domain": "wikipedia.org",
+            "granularity": "monthly",
+            "country": "ww",
+            "start_date": "2026-07-01",
+            "end_date": "2026-07-31",
+            "web_source": "total",
+            "metrics": [
+              "visits",
+              "pages_per_visit",
+              "average_visit_duration",
+              "bounce_rate"
+            ],
+            "state": null,
+            "mtd": false,
+            "main_domain_only": true
+          },
+          "status": "success",
+          "last_updated": "2026-07-31"
+        },
+        "data": [
+          {
+            "date": "2026-07-01",
+            "visits": 40555771.64289373,
+            "bounce_rate": 0.7988038149813301,
+            "average_visit_duration": 83.90847325355806,
+            "pages_per_visit": 1.3079659420209904,
+            "page_views": null,
+            "unique_visitors": null,
+            "new_users": null,
+            "returning_users": null
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/website/traffic-engagement?domain=estk.me&country=ww&web_source=total&granularity=monthly&start_date=2026-07&end_date=2026-07&metrics=visits%2Cpages_per_visit%2Caverage_visit_duration%2Cbounce_rate&main_domain_only=true",
+      "status": 404,
+      "request_id": "imc_1168e3e4c205968b222d4e4fc2eb8dd882ff3ea0ec7d4cb78fd914564d36abfe",
+      "ms": 640,
+      "body": {
+        "meta": {
+          "request": {
+            "format": "json",
+            "domain": "estk.me",
+            "granularity": "monthly",
+            "country": "ww",
+            "start_date": "2026-07-01",
+            "end_date": "2026-07-31",
+            "web_source": "total",
+            "metrics": [
+              "visits",
+              "pages_per_visit",
+              "average_visit_duration",
+              "bounce_rate"
+            ],
+            "state": null,
+            "mtd": false,
+            "main_domain_only": true
+          },
+          "status": "error",
+          "error_code": 401,
+          "error_message": "Data not found"
+        },
+        "data": null
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/website/similar-sites?domain=wikipedia.org&country=ww&web_source=total&granularity=monthly&start_date=2026-05&end_date=2026-07&limit=5",
+      "status": 200,
+      "request_id": "imc_7c18c6db3bede7494232833473246d68f77a51be798b5082ea4802ed4b0e19c6",
+      "ms": 629,
+      "body": {
+        "meta": {
+          "query": {
+            "limit": 5,
+            "offset": 0,
+            "asc": null,
+            "sort": null
+          },
+          "request": {
+            "format": "json",
+            "domain": "wikipedia.org",
+            "granularity": "monthly",
+            "start_date": "2026-05-01",
+            "end_date": "2026-07-31",
+            "metrics": [
+              "rank",
+              "affinity",
+              "has_adsense"
+            ],
+            "category": null
+          },
+          "status": "success",
+          "last_updated": "2026-07-31"
+        },
+        "data": [
+          {
+            "domain": "wikimediafoundation.org",
+            "category": "Reference_Materials/Reference_Materials",
+            "rank": 83841,
+            "affinity": 1,
+            "has_adsense": false
+          },
+          {
+            "domain": "wiktionary.org",
+            "category": "Reference_Materials/Dictionaries_and_Encyclopedias",
+            "rank": 2056,
+            "affinity": 0.8947368421052632,
+            "has_adsense": false
+          },
+          {
+            "domain": "wikidata.org",
+            "category": "Reference_Materials/Reference_Materials",
+            "rank": 15037,
+            "affinity": 0.8736842105263158,
+            "has_adsense": false
+          },
+          {
+            "domain": "wikiedu.org",
+            "category": "Science_and_Education/Universities_and_Colleges",
+            "rank": 482681,
+            "affinity": 0.8210526315789475,
+            "has_adsense": false
+          },
+          {
+            "domain": "wikieducator.org",
+            "category": "Science_and_Education/Education",
+            "rank": 584452,
+            "affinity": 0.7894736842105263,
+            "has_adsense": false
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/search/website-keywords?domain=wikipedia.org&country=ww&web_source=total&granularity=monthly&start_date=2026-07&end_date=2026-07&limit=5",
+      "status": 200,
+      "request_id": "imc_ce3260cd2bd334600c3d48c8fdc1b6239cc6b7f264a819279ea4d5a271acb55b",
+      "ms": 6363,
+      "body": {
+        "meta": {
+          "query": {
+            "limit": 5,
+            "offset": 0,
+            "asc": null,
+            "sort": null
+          },
+          "request": {
+            "branded_type": "all",
+            "keywords_filter_rules": [],
+            "format": "json",
+            "domain": "wikipedia.org",
+            "granularity": "monthly",
+            "country": "ww",
+            "start_date": "2026-07-01",
+            "end_date": "2026-07-31",
+            "traffic_source": "all",
+            "web_source": "total",
+            "metrics": [
+              "clicks",
+              "traffic_share",
+              "competition",
+              "primary_intent",
+              "secondary_intent",
+              "position",
+              "serp_features",
+              "top_url",
+              "url_count"
+            ]
+          },
+          "status": "success",
+          "last_updated": "2026-07-31"
+        },
+        "data": [
+          {
+            "keyword": "facebook",
+            "clicks": 9898179.568921236,
+            "traffic_share": 0.0032252757657578114,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": "Informational",
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "pla",
+              "images",
+              "related_searches",
+              "related_questions",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/Facebook",
+            "url_count": 79
+          },
+          {
+            "keyword": "instagram",
+            "clicks": 9802796.699934809,
+            "traffic_share": 0.0031941957016239676,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": "Informational",
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "pla",
+              "images",
+              "related_searches",
+              "related_questions",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/Instagram",
+            "url_count": 54
+          },
+          {
+            "keyword": "youtube",
+            "clicks": 9346094.71786365,
+            "traffic_share": 0.0030453814853641788,
+            "competition": 2,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "pla",
+              "images",
+              "related_searches",
+              "related_questions",
+              "paid_sitelinks",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/YouTube",
+            "url_count": 116
+          },
+          {
+            "keyword": "twitter",
+            "clicks": 8522075.892087309,
+            "traffic_share": 0.0027768787843574835,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "images",
+              "related_searches",
+              "related_questions",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/X_(social_network)",
+            "url_count": 72
+          },
+          {
+            "keyword": "the odyssey",
+            "clicks": 6767010.40191854,
+            "traffic_share": 0.0022049988590293443,
+            "competition": 1,
+            "primary_intent": "Informational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "pla",
+              "images",
+              "item_carousel",
+              "related_searches",
+              "popular_products",
+              "organic_inline_sitelinks",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid",
+              "news",
+              "video",
+              "organic",
+              "related_questions"
+            ],
+            "top_url": "en.wikipedia.org/wiki/The_Odyssey_(2026_film)",
+            "url_count": 80
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/search/website-keywords?domain=wikipedia.org&country=ww&web_source=total&granularity=monthly&start_date=2026-07&end_date=2026-07&limit=5",
+      "status": 200,
+      "request_id": "imc_3c2aedb4d04bf4322b4dcea810194e08a14c395d6e31917fcbac011d2e33d3e6",
+      "ms": 812,
+      "body": {
+        "meta": {
+          "query": {
+            "limit": 5,
+            "offset": 0,
+            "asc": null,
+            "sort": null
+          },
+          "request": {
+            "branded_type": "all",
+            "keywords_filter_rules": [],
+            "format": "json",
+            "domain": "wikipedia.org",
+            "granularity": "monthly",
+            "country": "ww",
+            "start_date": "2026-07-01",
+            "end_date": "2026-07-31",
+            "traffic_source": "all",
+            "web_source": "total",
+            "metrics": [
+              "clicks",
+              "traffic_share",
+              "competition",
+              "primary_intent",
+              "secondary_intent",
+              "position",
+              "serp_features",
+              "top_url",
+              "url_count"
+            ]
+          },
+          "status": "success",
+          "last_updated": "2026-07-31"
+        },
+        "data": [
+          {
+            "keyword": "facebook",
+            "clicks": 9898179.568921236,
+            "traffic_share": 0.0032252757657578114,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": "Informational",
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "pla",
+              "images",
+              "related_searches",
+              "related_questions",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/Facebook",
+            "url_count": 79
+          },
+          {
+            "keyword": "instagram",
+            "clicks": 9802796.699934809,
+            "traffic_share": 0.0031941957016239676,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": "Informational",
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "pla",
+              "images",
+              "related_searches",
+              "related_questions",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/Instagram",
+            "url_count": 54
+          },
+          {
+            "keyword": "youtube",
+            "clicks": 9346094.71786365,
+            "traffic_share": 0.0030453814853641788,
+            "competition": 2,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "pla",
+              "images",
+              "related_searches",
+              "related_questions",
+              "paid_sitelinks",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/YouTube",
+            "url_count": 116
+          },
+          {
+            "keyword": "twitter",
+            "clicks": 8522075.892087309,
+            "traffic_share": 0.0027768787843574835,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "images",
+              "related_searches",
+              "related_questions",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "en.wikipedia.org/wiki/X_(social_network)",
+            "url_count": 72
+          },
+          {
+            "keyword": "the odyssey",
+            "clicks": 6767010.40191854,
+            "traffic_share": 0.0022049988590293443,
+            "competition": 1,
+            "primary_intent": "Informational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "pla",
+              "images",
+              "item_carousel",
+              "related_searches",
+              "popular_products",
+              "organic_inline_sitelinks",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid",
+              "news",
+              "video",
+              "organic",
+              "related_questions"
+            ],
+            "top_url": "en.wikipedia.org/wiki/The_Odyssey_(2026_film)",
+            "url_count": 80
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://api.aisa.one/apis/v1/similarweb/search/website-keywords?domain=britannica.com&country=ww&web_source=total&granularity=monthly&start_date=2026-07&end_date=2026-07&limit=5",
+      "status": 200,
+      "request_id": "imc_ec88005bbec5ed0b919c30fcd8d203ff662ca5354e0a052a1e0bc3d55ba4d0ec",
+      "ms": 1571,
+      "body": {
+        "meta": {
+          "query": {
+            "limit": 5,
+            "offset": 0,
+            "asc": null,
+            "sort": null
+          },
+          "request": {
+            "branded_type": "all",
+            "keywords_filter_rules": [],
+            "format": "json",
+            "domain": "britannica.com",
+            "granularity": "monthly",
+            "country": "ww",
+            "start_date": "2026-07-01",
+            "end_date": "2026-07-31",
+            "traffic_source": "all",
+            "web_source": "total",
+            "metrics": [
+              "clicks",
+              "traffic_share",
+              "competition",
+              "primary_intent",
+              "secondary_intent",
+              "position",
+              "serp_features",
+              "top_url",
+              "url_count"
+            ]
+          },
+          "status": "success",
+          "last_updated": "2026-07-31"
+        },
+        "data": [
+          {
+            "keyword": "x",
+            "clicks": 533775.1995951138,
+            "traffic_share": 0.017514019540152373,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "apps",
+              "images",
+              "related_searches",
+              "related_questions",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "britannica.com/money/Twitter",
+            "url_count": 3
+          },
+          {
+            "keyword": "octordle",
+            "clicks": 502715.0805681033,
+            "traffic_share": 0.016494887268793283,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "images",
+              "related_searches",
+              "related_questions",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "britannica.com/games/octordle/daily/1537",
+            "url_count": 46
+          },
+          {
+            "keyword": "iran",
+            "clicks": 303245.349592987,
+            "traffic_share": 0.009949965795077245,
+            "competition": 0,
+            "primary_intent": "Informational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "news",
+              "video",
+              "organic",
+              "organic_sitelinks",
+              "pla",
+              "images",
+              "related_searches",
+              "featured_answer",
+              "related_questions",
+              "organic_inline_sitelinks",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid"
+            ],
+            "top_url": "britannica.com/place/Iran",
+            "url_count": 6
+          },
+          {
+            "keyword": "the odyssey",
+            "clicks": 204059.4595218092,
+            "traffic_share": 0.006695517821226655,
+            "competition": 1,
+            "primary_intent": "Informational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "organic_sitelinks",
+              "organic_expanded_sitelinks",
+              "pla",
+              "images",
+              "item_carousel",
+              "related_searches",
+              "popular_products",
+              "organic_inline_sitelinks",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid",
+              "news",
+              "video",
+              "organic",
+              "related_questions"
+            ],
+            "top_url": "britannica.com/topic/Odyssey-epic-by-Homer",
+            "url_count": 7
+          },
+          {
+            "keyword": "argentina",
+            "clicks": 165602.7710485042,
+            "traffic_share": 0.005433692255179539,
+            "competition": 1,
+            "primary_intent": "Informational",
+            "secondary_intent": null,
+            "position": null,
+            "serp_features": [
+              "organic_sitelinks",
+              "pla",
+              "images",
+              "related_searches",
+              "organic_inline_sitelinks",
+              "paid_sitelinks",
+              "ai_overview",
+              "paid",
+              "news",
+              "video",
+              "organic",
+              "featured_answer",
+              "local_pack",
+              "related_questions"
+            ],
+            "top_url": "britannica.com/place/Argentina",
+            "url_count": 3
+          }
+        ]
+      }
+    }
+  ],
+  "tools": [
+    {
+      "name": "AIsa_geography",
+      "args": {
+        "domains": [
+          "estk.me",
+          "wikipedia.org"
+        ]
+      },
+      "result": {
+        "schema_version": "1.0.0",
+        "scope": {
+          "domains": [
+            "estk.me",
+            "wikipedia.org"
+          ],
+          "country": "ww",
+          "time": "latest_available_per_domain"
+        },
+        "data": [
+          {
+            "domain": "wikipedia.org",
+            "country_code": "us",
+            "country_name": "United States",
+            "share": 0.36968358508040755,
+            "visits": 14992803.05578991
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "in",
+            "country_name": "India",
+            "share": 0.08445194729632782,
+            "visits": 3425013.8891517064
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "gb",
+            "country_name": "United Kingdom",
+            "share": 0.05263500147154518,
+            "visits": 2134653.0999812903
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "de",
+            "country_name": "Germany",
+            "share": 0.03342404660550102,
+            "visits": 1355538.0014366196
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "ca",
+            "country_name": "Canada",
+            "share": 0.026555539474327493,
+            "visits": 1076980.3947130882
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "vn",
+            "country_name": "Vietnam",
+            "share": 0.019719241463943885,
+            "visits": 799729.0537370567
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "au",
+            "country_name": "Australia",
+            "share": 0.018736916394880825,
+            "visits": 759890.1025593237
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "ru",
+            "country_name": "Russian Federation",
+            "share": 0.017159572207739116,
+            "visits": 695919.6919070168
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "ph",
+            "country_name": "Philippines",
+            "share": 0.01690939394600218,
+            "visits": 685773.5194545777
+          },
+          {
+            "domain": "wikipedia.org",
+            "country_code": "tw",
+            "country_name": "Taiwan",
+            "share": 0.015884649655088824,
+            "visits": 644214.2240023132
+          }
+        ],
+        "derived": [],
+        "completeness": {
+          "status": "partial",
+          "requested_items": [
+            "estk.me",
+            "wikipedia.org"
+          ],
+          "returned_items": [
+            "wikipedia.org"
+          ],
+          "failures": [
+            {
+              "domain": "estk.me",
+              "code": "not_found",
+              "message": "HTTP 404 returned by AIsa or its data provider. The response does not establish whether the route is unavailable or the requested resource/data was not found."
+            }
+          ]
+        },
+        "provenance": [
+          {
+            "domain": "estk.me",
+            "endpoint": "/similarweb/website-top-geographies",
+            "retrieved_at": "2026-09-05T19:47:32.505Z",
+            "data_as_of": null,
+            "reported_scope": {},
+            "status": "failed"
+          },
+          {
+            "domain": "wikipedia.org",
+            "endpoint": "/similarweb/website-top-geographies",
+            "retrieved_at": "2026-09-05T19:47:32.528Z",
+            "data_as_of": null,
+            "reported_scope": {
+              "country": "ww",
+              "start_date": "2026-07",
+              "end_date": "2026-07",
+              "granularity": "monthly"
+            },
+            "status": "success"
+          }
+        ],
+        "calculation": {},
+        "warnings": [
+          "Latest available per-domain snapshots may cover different months. Inspect provenance before comparing."
+        ]
+      }
+    },
+    {
+      "name": "AIsa_traffic_engagement",
+      "args": {
+        "domains": [
+          "wikipedia.org",
+          "estk.me"
+        ],
+        "start_month": "2026-07",
+        "end_month": "2026-07"
+      },
+      "result": {
+        "schema_version": "1.0.0",
+        "scope": {
+          "domains": [
+            "wikipedia.org",
+            "estk.me"
+          ],
+          "start_month": "2026-07",
+          "end_month": "2026-07",
+          "country": "ww",
+          "web_source": "total",
+          "granularity": "monthly",
+          "main_domain_only": true
+        },
+        "data": [
+          {
+            "domain": "wikipedia.org",
+            "period": "2026-07",
+            "visits": 40555771.64289373,
+            "pages_per_visit": 1.3079659420209904,
+            "average_visit_duration_seconds": 83.90847325355806,
+            "bounce_rate": 0.7988038149813301
+          }
+        ],
+        "derived": [
+          {
+            "domain": "wikipedia.org",
+            "metric": "visits",
+            "start_period": "2026-07",
+            "end_period": "2026-07",
+            "start_value": 40555771.64289373,
+            "end_value": 40555771.64289373,
+            "absolute_change": 0,
+            "relative_change": 0
+          },
+          {
+            "domain": "wikipedia.org",
+            "metric": "pages_per_visit",
+            "start_period": "2026-07",
+            "end_period": "2026-07",
+            "start_value": 1.3079659420209904,
+            "end_value": 1.3079659420209904,
+            "absolute_change": 0,
+            "relative_change": 0
+          },
+          {
+            "domain": "wikipedia.org",
+            "metric": "average_visit_duration_seconds",
+            "start_period": "2026-07",
+            "end_period": "2026-07",
+            "start_value": 83.90847325355806,
+            "end_value": 83.90847325355806,
+            "absolute_change": 0,
+            "relative_change": 0
+          },
+          {
+            "domain": "wikipedia.org",
+            "metric": "bounce_rate",
+            "start_period": "2026-07",
+            "end_period": "2026-07",
+            "start_value": 0.7988038149813301,
+            "end_value": 0.7988038149813301,
+            "absolute_change": 0,
+            "relative_change": 0
+          }
+        ],
+        "completeness": {
+          "status": "partial",
+          "requested_items": [
+            "wikipedia.org",
+            "estk.me"
+          ],
+          "returned_items": [
+            "wikipedia.org"
+          ],
+          "failures": [
+            {
+              "domain": "estk.me",
+              "code": "not_found",
+              "message": "HTTP 404 returned by AIsa or its data provider. The response does not establish whether the route is unavailable or the requested resource/data was not found."
+            }
+          ]
+        },
+        "provenance": [
+          {
+            "domain": "wikipedia.org",
+            "endpoint": "/similarweb/website/traffic-engagement",
+            "retrieved_at": "2026-09-05T19:47:35.265Z",
+            "data_as_of": "2026-07-31",
+            "reported_scope": {
+              "domain": "wikipedia.org",
+              "country": "ww",
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31",
+              "granularity": "monthly",
+              "web_source": "total",
+              "main_domain_only": true
+            },
+            "status": "success"
+          },
+          {
+            "domain": "estk.me",
+            "endpoint": "/similarweb/website/traffic-engagement",
+            "retrieved_at": "2026-09-05T19:47:35.266Z",
+            "data_as_of": null,
+            "reported_scope": {},
+            "status": "failed"
+          }
+        ],
+        "calculation": {
+          "algorithm_version": "traffic-derived-v1",
+          "relative_change": "(end_value-start_value)/start_value",
+          "rate_unit": "fraction",
+          "duration_unit": "seconds",
+          "aggregation": "no cross-period averaging"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "name": "AIsa_similar_sites",
+      "args": {
+        "domain": "wikipedia.org",
+        "end_month": "2026-07",
+        "limit": 5
+      },
+      "result": {
+        "schema_version": "1.0.0",
+        "scope": {
+          "domain": "wikipedia.org",
+          "end_month": "2026-07",
+          "limit": 5,
+          "country": "ww",
+          "web_source": "total",
+          "granularity": "monthly",
+          "start_month": "2026-05"
+        },
+        "data": [
+          {
+            "seed_domain": "wikipedia.org",
+            "domain": "wikimediafoundation.org",
+            "affinity": 1,
+            "rank": 83841,
+            "category": "Reference_Materials/Reference_Materials"
+          },
+          {
+            "seed_domain": "wikipedia.org",
+            "domain": "wiktionary.org",
+            "affinity": 0.8947368421052632,
+            "rank": 2056,
+            "category": "Reference_Materials/Dictionaries_and_Encyclopedias"
+          },
+          {
+            "seed_domain": "wikipedia.org",
+            "domain": "wikidata.org",
+            "affinity": 0.8736842105263158,
+            "rank": 15037,
+            "category": "Reference_Materials/Reference_Materials"
+          },
+          {
+            "seed_domain": "wikipedia.org",
+            "domain": "wikiedu.org",
+            "affinity": 0.8210526315789475,
+            "rank": 482681,
+            "category": "Science_and_Education/Universities_and_Colleges"
+          },
+          {
+            "seed_domain": "wikipedia.org",
+            "domain": "wikieducator.org",
+            "affinity": 0.7894736842105263,
+            "rank": 584452,
+            "category": "Science_and_Education/Education"
+          }
+        ],
+        "derived": [],
+        "completeness": {
+          "status": "complete",
+          "requested_items": [
+            "wikipedia.org"
+          ],
+          "returned_items": [
+            "wikipedia.org"
+          ],
+          "failures": []
+        },
+        "provenance": [
+          {
+            "domain": "wikipedia.org",
+            "endpoint": "/similarweb/website/similar-sites",
+            "retrieved_at": "2026-09-05T19:47:35.907Z",
+            "data_as_of": "2026-07-31",
+            "reported_scope": {
+              "domain": "wikipedia.org",
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31",
+              "granularity": "monthly"
+            },
+            "status": "success"
+          }
+        ],
+        "calculation": {},
+        "warnings": []
+      }
+    },
+    {
+      "name": "AIsa_website_keywords",
+      "args": {
+        "domain": "wikipedia.org",
+        "month": "2026-07",
+        "limit": 5
+      },
+      "result": {
+        "schema_version": "1.0.0",
+        "scope": {
+          "domain": "wikipedia.org",
+          "month": "2026-07",
+          "limit": 5,
+          "country": "ww",
+          "web_source": "total",
+          "granularity": "monthly",
+          "traffic_source": "upstream_default",
+          "branded_type": "upstream_default",
+          "sample_limit": 5
+        },
+        "data": [
+          {
+            "domain": "wikipedia.org",
+            "keyword": "facebook",
+            "normalized_keyword": "facebook",
+            "clicks": 9898179.568921236,
+            "traffic_share": 0.0032252757657578114,
+            "position": null,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": "Informational",
+            "top_url": "en.wikipedia.org/wiki/Facebook"
+          },
+          {
+            "domain": "wikipedia.org",
+            "keyword": "instagram",
+            "normalized_keyword": "instagram",
+            "clicks": 9802796.699934809,
+            "traffic_share": 0.0031941957016239676,
+            "position": null,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": "Informational",
+            "top_url": "en.wikipedia.org/wiki/Instagram"
+          },
+          {
+            "domain": "wikipedia.org",
+            "keyword": "youtube",
+            "normalized_keyword": "youtube",
+            "clicks": 9346094.71786365,
+            "traffic_share": 0.0030453814853641788,
+            "position": null,
+            "competition": 2,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "top_url": "en.wikipedia.org/wiki/YouTube"
+          },
+          {
+            "domain": "wikipedia.org",
+            "keyword": "twitter",
+            "normalized_keyword": "twitter",
+            "clicks": 8522075.892087309,
+            "traffic_share": 0.0027768787843574835,
+            "position": null,
+            "competition": 0,
+            "primary_intent": "Navigational",
+            "secondary_intent": null,
+            "top_url": "en.wikipedia.org/wiki/X_(social_network)"
+          },
+          {
+            "domain": "wikipedia.org",
+            "keyword": "the odyssey",
+            "normalized_keyword": "the odyssey",
+            "clicks": 6767010.40191854,
+            "traffic_share": 0.0022049988590293443,
+            "position": null,
+            "competition": 1,
+            "primary_intent": "Informational",
+            "secondary_intent": null,
+            "top_url": "en.wikipedia.org/wiki/The_Odyssey_(2026_film)"
+          }
+        ],
+        "derived": [],
+        "completeness": {
+          "status": "complete",
+          "requested_items": [
+            "wikipedia.org"
+          ],
+          "returned_items": [
+            "wikipedia.org"
+          ],
+          "failures": []
+        },
+        "provenance": [
+          {
+            "domain": "wikipedia.org",
+            "endpoint": "/similarweb/search/website-keywords",
+            "retrieved_at": "2026-09-05T19:47:36.537Z",
+            "data_as_of": "2026-07-31",
+            "reported_scope": {
+              "domain": "wikipedia.org",
+              "country": "ww",
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31",
+              "granularity": "monthly",
+              "web_source": "total",
+              "traffic_source": "all",
+              "branded_type": "all"
+            },
+            "status": "success"
+          }
+        ],
+        "calculation": {},
+        "warnings": [
+          "Top-N sample only; organic/nonbranded filters and volume/difficulty are not supported by the current AIsa contract. Competition is preserved as reported, not renamed to difficulty."
+        ]
+      }
+    },
+    {
+      "name": "AIsa_keyword_gap",
+      "args": {
+        "target_domain": "wikipedia.org",
+        "competitor_domains": [
+          "britannica.com"
+        ],
+        "month": "2026-07",
+        "limit_per_domain": 5
+      },
+      "result": {
+        "schema_version": "1.0.0",
+        "scope": {
+          "target_domain": "wikipedia.org",
+          "competitor_domains": [
+            "britannica.com"
+          ],
+          "month": "2026-07",
+          "limit_per_domain": 5,
+          "country": "ww",
+          "web_source": "total",
+          "granularity": "monthly",
+          "traffic_source": "upstream_default",
+          "branded_type": "upstream_default",
+          "sample_limit": 5
+        },
+        "data": [
+          {
+            "keyword": "x",
+            "normalized_keyword": "x",
+            "category": "competitor_only_in_sample",
+            "position_delta": null,
+            "best_competitor_position": null,
+            "evidence": [
+              {
+                "domain": "wikipedia.org",
+                "sample_status": "returned",
+                "row": null
+              },
+              {
+                "domain": "britannica.com",
+                "sample_status": "returned",
+                "row": {
+                  "keyword": "x",
+                  "normalized_keyword": "x",
+                  "clicks": 533775.1995951138,
+                  "traffic_share": 0.017514019540152373,
+                  "position": null,
+                  "competition": 0,
+                  "primary_intent": "Navigational",
+                  "secondary_intent": null,
+                  "top_url": "britannica.com/money/Twitter"
+                }
+              }
+            ],
+            "max_competitor_clicks": 533775.1995951138
+          },
+          {
+            "keyword": "octordle",
+            "normalized_keyword": "octordle",
+            "category": "competitor_only_in_sample",
+            "position_delta": null,
+            "best_competitor_position": null,
+            "evidence": [
+              {
+                "domain": "wikipedia.org",
+                "sample_status": "returned",
+                "row": null
+              },
+              {
+                "domain": "britannica.com",
+                "sample_status": "returned",
+                "row": {
+                  "keyword": "octordle",
+                  "normalized_keyword": "octordle",
+                  "clicks": 502715.0805681033,
+                  "traffic_share": 0.016494887268793283,
+                  "position": null,
+                  "competition": 0,
+                  "primary_intent": "Navigational",
+                  "secondary_intent": null,
+                  "top_url": "britannica.com/games/octordle/daily/1537"
+                }
+              }
+            ],
+            "max_competitor_clicks": 502715.0805681033
+          },
+          {
+            "keyword": "iran",
+            "normalized_keyword": "iran",
+            "category": "competitor_only_in_sample",
+            "position_delta": null,
+            "best_competitor_position": null,
+            "evidence": [
+              {
+                "domain": "wikipedia.org",
+                "sample_status": "returned",
+                "row": null
+              },
+              {
+                "domain": "britannica.com",
+                "sample_status": "returned",
+                "row": {
+                  "keyword": "iran",
+                  "normalized_keyword": "iran",
+                  "clicks": 303245.349592987,
+                  "traffic_share": 0.009949965795077245,
+                  "position": null,
+                  "competition": 0,
+                  "primary_intent": "Informational",
+                  "secondary_intent": null,
+                  "top_url": "britannica.com/place/Iran"
+                }
+              }
+            ],
+            "max_competitor_clicks": 303245.349592987
+          },
+          {
+            "keyword": "argentina",
+            "normalized_keyword": "argentina",
+            "category": "competitor_only_in_sample",
+            "position_delta": null,
+            "best_competitor_position": null,
+            "evidence": [
+              {
+                "domain": "wikipedia.org",
+                "sample_status": "returned",
+                "row": null
+              },
+              {
+                "domain": "britannica.com",
+                "sample_status": "returned",
+                "row": {
+                  "keyword": "argentina",
+                  "normalized_keyword": "argentina",
+                  "clicks": 165602.7710485042,
+                  "traffic_share": 0.005433692255179539,
+                  "position": null,
+                  "competition": 1,
+                  "primary_intent": "Informational",
+                  "secondary_intent": null,
+                  "top_url": "britannica.com/place/Argentina"
+                }
+              }
+            ],
+            "max_competitor_clicks": 165602.7710485042
+          },
+          {
+            "keyword": "the odyssey",
+            "normalized_keyword": "the odyssey",
+            "category": "insufficient_data",
+            "position_delta": null,
+            "best_competitor_position": null,
+            "evidence": [
+              {
+                "domain": "wikipedia.org",
+                "sample_status": "returned",
+                "row": {
+                  "keyword": "the odyssey",
+                  "normalized_keyword": "the odyssey",
+                  "clicks": 6767010.40191854,
+                  "traffic_share": 0.0022049988590293443,
+                  "position": null,
+                  "competition": 1,
+                  "primary_intent": "Informational",
+                  "secondary_intent": null,
+                  "top_url": "en.wikipedia.org/wiki/The_Odyssey_(2026_film)"
+                }
+              },
+              {
+                "domain": "britannica.com",
+                "sample_status": "returned",
+                "row": {
+                  "keyword": "the odyssey",
+                  "normalized_keyword": "the odyssey",
+                  "clicks": 204059.4595218092,
+                  "traffic_share": 0.006695517821226655,
+                  "position": null,
+                  "competition": 1,
+                  "primary_intent": "Informational",
+                  "secondary_intent": null,
+                  "top_url": "britannica.com/topic/Odyssey-epic-by-Homer"
+                }
+              }
+            ],
+            "max_competitor_clicks": 204059.4595218092
+          }
+        ],
+        "derived": [],
+        "completeness": {
+          "status": "complete",
+          "requested_items": [
+            "wikipedia.org",
+            "britannica.com"
+          ],
+          "returned_items": [
+            "wikipedia.org",
+            "britannica.com"
+          ],
+          "failures": []
+        },
+        "provenance": [
+          {
+            "domain": "wikipedia.org",
+            "endpoint": "/similarweb/search/website-keywords",
+            "retrieved_at": "2026-09-05T19:47:42.902Z",
+            "data_as_of": "2026-07-31",
+            "reported_scope": {
+              "domain": "wikipedia.org",
+              "country": "ww",
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31",
+              "granularity": "monthly",
+              "web_source": "total",
+              "traffic_source": "all",
+              "branded_type": "all"
+            },
+            "status": "success"
+          },
+          {
+            "domain": "britannica.com",
+            "endpoint": "/similarweb/search/website-keywords",
+            "retrieved_at": "2026-09-05T19:47:42.902Z",
+            "data_as_of": "2026-07-31",
+            "reported_scope": {
+              "domain": "britannica.com",
+              "country": "ww",
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31",
+              "granularity": "monthly",
+              "web_source": "total",
+              "traffic_source": "all",
+              "branded_type": "all"
+            },
+            "status": "success"
+          }
+        ],
+        "calculation": {
+          "algorithm_version": "keyword-gap-v1",
+          "position_threshold": 5,
+          "ranking": [
+            "category",
+            "max_competitor_clicks_desc_null_last",
+            "normalized_keyword"
+          ],
+          "target_only_in_sample": 4
+        },
+        "warnings": [
+          "Top-N sample only; organic/nonbranded filters and volume/difficulty are not supported by the current AIsa contract. Competition is preserved as reported, not renamed to difficulty."
+        ]
+      }
+    }
+  ]
+}
