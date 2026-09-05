@@ -7,12 +7,12 @@ Node/TypeScript stdio MCP for focused website competitive analysis. Five tools c
 Requires Node 22 or newer. Set AISA_API_KEY in the environment of the process launching your MCP client, then run one of:
 
 ```sh
-npx -y @aisa/web-market@0.1.0 setup --client codex
-npx -y @aisa/web-market@0.1.0 setup --client claude-code
-npx -y @aisa/web-market@0.1.0 setup --client hermes
+npx -y @hzlmy2002/web-market@0.1.0 setup --client codex
+npx -y @hzlmy2002/web-market@0.1.0 setup --client claude-code
+npx -y @hzlmy2002/web-market@0.1.0 setup --client hermes
 ```
 
-This installs the Skill and registers a version-pinned `npx -y @aisa/web-market@0.1.0 serve` MCP command. Clearing the npm cache does not invalidate the configured path: npx downloads the pinned release again when necessary. Restart or refresh the client to discover the Skill. Credentials must still reach the MCP process; the installer never stores your key. Use `uninstall --client ...` to remove an unchanged managed installation.
+This installs the Skill and registers a version-pinned `npx -y @hzlmy2002/web-market@0.1.0 serve` MCP command. Clearing the npm cache does not invalidate the configured path: npx downloads the pinned release again when necessary. Restart or refresh the client to discover the Skill. Credentials must still reach the MCP process; the installer never stores your key. Use `uninstall --client ...` to remove an unchanged managed installation.
 
 ## Local setup
 

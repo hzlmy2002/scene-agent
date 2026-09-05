@@ -13,7 +13,7 @@ const skillName = 'aisa-web-market';
 // local Node entry so development changes remain immediately testable.
 export function launchEntry(client: Client, root = packageRoot) {
   const command = root.split(path.sep).includes('node_modules')
-    ? {command: process.platform === 'win32' ? 'npx.cmd' : 'npx', args: ['-y', '@aisa/web-market@0.1.0', 'serve']}
+    ? {command: process.platform === 'win32' ? 'npx.cmd' : 'npx', args: ['-y', '@hzlmy2002/web-market@0.1.0', 'serve']}
     : {command: process.execPath, args: [path.join(root, 'dist/cli.js'), 'serve']};
   return {...command, ...(client === 'codex' ? {env_vars: ['AISA_API_KEY']} : {})};
 }
