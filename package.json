@@ -33,5 +33,17 @@
     "@types/node": "22.20.1",
     "esbuild": "0.28.2",
     "typescript": "5.9.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hzlmy2002/scene-agent.git"
+  },
+  "homepage": "https://github.com/hzlmy2002/scene-agent#readme",
+  "bugs": {
+    "url": "https://github.com/hzlmy2002/scene-agent/issues"
   }
 }

@@ -8,6 +8,16 @@ import YAML from 'yaml';
 export type Client = 'codex' | 'claude-code' | 'hermes';
 export const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const skillName = 'aisa-web-market';
+// npm/npx installations live in node_modules. Persist a version-pinned registry
+// command rather than a path into npx's disposable cache. Checkouts keep the
+// local Node entry so development changes remain immediately testable.
+export function launchEntry(client: Client, root = packageRoot) {
+  const command = root.split(path.sep).includes('node_modules')
+    ? {command: process.platform === 'win32' ? 'npx.cmd' : 'npx', args: ['-y', '@aisa/web-market@0.1.0', 'serve']}
+    : {command: process.execPath, args: [path.join(root, 'dist/cli.js'), 'serve']};
+  return {...command, ...(client === 'codex' ? {env_vars: ['AISA_API_KEY']} : {})};
+}
+
 const hash = (x: string) => createHash('sha256').update(x).digest('hex');
 async function read(file: string) { try { return await fs.readFile(file, 'utf8'); } catch (e: any) { if (e.code === 'ENOENT') return undefined; throw e; } }
 async function noSymlinks(target: string) {
@@ -54,7 +64,7 @@ export async function install(client: Client, options: {home?: string; remove?: 
     const previous = JSON.parse(await read(stateFile) ?? '{"files":{}}');
     const cfg = configFor(client, home);
     const root = skillRoot(client, home);
-    const entry = {command: process.execPath, args: [path.join(packageRoot, 'dist/cli.js'), 'serve'], ...(client === 'codex' ? {env_vars: ['AISA_API_KEY']} : {})};
+    const entry = launchEntry(client);
     const writes = new Map<string, string | undefined>();
     const next: any = {version: '0.1.0', files: {}, config: previous.config};
     const bundled = await skillFiles(path.join(packageRoot, 'skills', skillName));

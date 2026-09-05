@@ -34,3 +34,12 @@ test('an identical but unowned skill is not adopted and later deleted',async()=>
  const home=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'aisa-install-')));
  try{const target=path.join(home,'.agents/skills/aisa-web-market');await fs.mkdir(target,{recursive:true});await fs.copyFile('skills/aisa-web-market/SKILL.md',path.join(target,'SKILL.md'));await assert.rejects(install('codex',{home}),/unowned/);}finally{await fs.rm(home,{recursive:true,force:true});}
 });
+test('npm/npx installs persist a pinned command rather than disposable cache paths',async()=>{
+ const {launchEntry}=await import('../dist/install.js');
+ for(const client of ['codex','claude-code','hermes']){
+ const entry=launchEntry(client,path.join('/temporary','npm-cache','_npx','hash','node_modules','@aisa','web-market'));
+ assert.equal(entry.command,process.platform==='win32'?'npx.cmd':'npx');
+ assert.deepEqual(entry.args,['-y','@aisa/web-market@0.1.0','serve']);
+ assert.ok(!JSON.stringify(entry).includes('npm-cache'));
+ }
+});

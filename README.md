@@ -2,6 +2,18 @@
 
 Node/TypeScript stdio MCP for focused website competitive analysis. Five tools call **AIsa REST APIs directly**, with user-supplied Bearer authentication. No dependency on the Python aisa-mcp server, OAuth, or model calls inside tools.
 
+## Install with npx
+
+Requires Node 22 or newer. Set AISA_API_KEY in the environment of the process launching your MCP client, then run one of:
+
+```sh
+npx -y @aisa/web-market@0.1.0 setup --client codex
+npx -y @aisa/web-market@0.1.0 setup --client claude-code
+npx -y @aisa/web-market@0.1.0 setup --client hermes
+```
+
+This installs the Skill and registers a version-pinned `npx -y @aisa/web-market@0.1.0 serve` MCP command. Clearing the npm cache does not invalidate the configured path: npx downloads the pinned release again when necessary. Restart or refresh the client to discover the Skill. Credentials must still reach the MCP process; the installer never stores your key. Use `uninstall --client ...` to remove an unchanged managed installation.
+
 ## Local setup
 
 Requires Node 22 or newer.
@@ -79,7 +91,7 @@ Prefer either plugin installation or direct setup for a client, to avoid duplica
 
 ## Development and release
 
-`npm test` exercises API contracts, calculations, failures, installer preservation and real stdio protocol exchange without network calls or credits. `npm pack` creates an installable npm archive. The `@aisa/web-market` name is provisional and has not been published or registry ownership verified. Until published, use the checkout, a local tarball installed to a stable directory, or a generated plugin. Avoid registering an ephemeral npx-cache path through `setup` for long-term use.
+`npm test` exercises API contracts, calculations, failures, installer preservation and real stdio protocol exchange without network calls or credits. `npm pack` creates an installable npm archive. The scoped package is configured for public npm publication. npm-installed setup registers a pinned npx command; setup from a source checkout registers its local Node entry. Plugin bundles remain a separate distribution option.
 
 `docs/contract.md` records the endpoint mapping and limits. `docs/upstream-snapshot.json` captures only the required operation definitions and examples from the supplied docs checkout. Run `node scripts/check-contract.mjs /path/to/docs/openapi/similarweb.json` to detect drift in those operations. Live API verification requires an explicitly selected funded account and month; no production calls are made by the test suite.
 
