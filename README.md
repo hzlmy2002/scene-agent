@@ -4,15 +4,15 @@ Node/TypeScript stdio MCP for focused website competitive analysis. Five tools c
 
 ## Install with npx
 
-Requires Node 22 or newer. Set AISA_API_KEY in the environment of the process launching your MCP client, then run one of:
+Requires Node 22 or newer. Run one of these commands in a terminal:
 
 ```sh
-npx -y @hzlmy2002/web-market@0.1.0 setup --client codex
-npx -y @hzlmy2002/web-market@0.1.0 setup --client claude-code
-npx -y @hzlmy2002/web-market@0.1.0 setup --client hermes
+npx -y @hzlmy2002/web-market@0.1.1 setup --client codex
+npx -y @hzlmy2002/web-market@0.1.1 setup --client claude-code
+npx -y @hzlmy2002/web-market@0.1.1 setup --client hermes
 ```
 
-This installs the Skill and registers a version-pinned `npx -y @hzlmy2002/web-market@0.1.0 serve` MCP command. Clearing the npm cache does not invalidate the configured path: npx downloads the pinned release again when necessary. Restart or refresh the client to discover the Skill. Credentials must still reach the MCP process; the installer never stores your key. Use `uninstall --client ...` to remove an unchanged managed installation.
+This installs the Skill and registers a version-pinned `npx -y @hzlmy2002/web-market@0.1.1 serve` MCP command. Clearing the npm cache does not invalidate the configured path: npx downloads the pinned release again when necessary. Restart or refresh the client to discover the Skill. If no key is configured, setup prompts for hidden input and saves the key in the selected client’s MCP `env.AISA_API_KEY` setting. This works independently of shell startup files on macOS, Linux, and Windows. Existing saved keys are reused. If `AISA_API_KEY` is already set in the setup environment, setup keeps using environment-based authentication without copying the key; the client must inherit that variable. Non-interactive setup without a saved or environment key exits with instructions. Use `uninstall --client ...` to remove an unchanged managed installation.
 
 ## Local setup
 
@@ -24,7 +24,7 @@ npm test
 npm run build
 ```
 
-Set `AISA_API_KEY` in the environment of the process launching your MCP client. It is an AIsa API key; never put it in a Skill or commit it. Desktop clients started outside your shell may need the variable configured explicitly in their MCP settings. The installer does not read or persist the key.
+Setup prompts for a missing AIsa API key and stores it as plaintext in the selected client configuration, with restrictive file permissions where supported. It is never printed or copied into Skills or installer state. This is a temporary Bearer authentication flow ahead of OAuth support. Setup does not edit shell profiles or Windows user environment variables. Alternatively, set `AISA_API_KEY` in the environment inherited by your MCP client. Desktop applications may not inherit variables exported in a terminal.
 
 Run one of these from this checkout:
 

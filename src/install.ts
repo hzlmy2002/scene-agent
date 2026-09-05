@@ -13,7 +13,7 @@ const skillName = 'aisa-web-market';
 // local Node entry so development changes remain immediately testable.
 export function launchEntry(client: Client, root = packageRoot) {
   const command = root.split(path.sep).includes('node_modules')
-    ? {command: process.platform === 'win32' ? 'npx.cmd' : 'npx', args: ['-y', '@hzlmy2002/web-market@0.1.0', 'serve']}
+    ? {command: process.platform === 'win32' ? 'npx.cmd' : 'npx', args: ['-y', '@hzlmy2002/web-market@0.1.1', 'serve']}
     : {command: process.execPath, args: [path.join(root, 'dist/cli.js'), 'serve']};
   return {...command, ...(client === 'codex' ? {env_vars: ['AISA_API_KEY']} : {})};
 }
@@ -50,7 +50,7 @@ async function skillFiles(root: string, prefix = ''): Promise<Record<string, str
   }
   return out;
 }
-export async function install(client: Client, options: {home?: string; remove?: boolean; skillsOnly?: boolean} = {}) {
+export async function install(client: Client, options: {home?: string; remove?: boolean; skillsOnly?: boolean; resolveKey?: (savedKey?: string) => Promise<string | undefined>} = {}) {
   if (!['codex', 'claude-code', 'hermes'].includes(client)) throw Error('Choose --client codex, claude-code or hermes.');
   const home = path.resolve(options.home ?? homedir());
   const stateDir = path.join(home, '.aisa/web-market');
@@ -66,7 +66,7 @@ export async function install(client: Client, options: {home?: string; remove?: 
     const root = skillRoot(client, home);
     const entry = launchEntry(client);
     const writes = new Map<string, string | undefined>();
-    const next: any = {version: '0.1.0', files: {}, config: previous.config};
+    const next: any = {version: '0.1.1', files: {}, config: previous.config, configHash: previous.configHash};
     const bundled = await skillFiles(path.join(packageRoot, 'skills', skillName));
     for (const relative of new Set([...Object.keys(bundled), ...Object.keys(previous.files)])) {
       if (path.isAbsolute(relative) || relative.split(/[\\/]/).includes('..')) throw Error('Invalid installer state path.');
@@ -81,7 +81,7 @@ export async function install(client: Client, options: {home?: string; remove?: 
         writes.set(file, content); next.files[relative] = hash(content);
       }
     }
-    if (!options.skillsOnly && (!options.remove || previous.config)) {
+    if (!options.skillsOnly && (!options.remove || previous.config || previous.configHash)) {
       await noSymlinks(cfg.file);
       const current = await read(cfg.file); let config: any;
       try { config = current?.trim() ? cfg.parse(current) : {}; } catch { throw Error('Client configuration could not be parsed; no files were changed.'); }
@@ -89,12 +89,22 @@ export async function install(client: Client, options: {home?: string; remove?: 
       config[cfg.key] ??= {};
       if (typeof config[cfg.key] !== 'object' || Array.isArray(config[cfg.key])) throw Error('Invalid MCP configuration section.');
       const existing = config[cfg.key][skillName];
+      const owned = previous.configHash ? existing !== undefined && hash(JSON.stringify(existing)) === previous.configHash : JSON.stringify(existing) === JSON.stringify(previous.config);
       if (options.remove) {
-        if (existing && JSON.stringify(existing) !== JSON.stringify(previous.config)) throw Error('MCP entry has been modified; preserving it.');
+        if (existing && !owned) throw Error('MCP entry has been modified; preserving it.');
         delete config[cfg.key][skillName];
       } else {
-        if (existing && JSON.stringify(existing) !== JSON.stringify(previous.config) && JSON.stringify(existing) !== JSON.stringify(entry)) throw Error('An unowned aisa-web-market MCP entry already exists; preserving it.');
-        config[cfg.key][skillName] = entry; next.config = entry;
+        if (existing && !owned && JSON.stringify(existing) !== JSON.stringify(entry)) throw Error('An unowned aisa-web-market MCP entry already exists; preserving it.');
+        const savedKey = typeof existing?.env?.AISA_API_KEY === 'string' ? existing.env.AISA_API_KEY : undefined;
+        const apiKey = options.resolveKey ? await options.resolveKey(savedKey) : savedKey;
+        const configured: any = {...entry};
+        if (apiKey) {
+          configured.env = {AISA_API_KEY: apiKey};
+          delete configured.env_vars;
+        }
+        config[cfg.key][skillName] = configured;
+        delete next.config;
+        next.configHash = hash(JSON.stringify(configured));
       }
       writes.set(cfg.file, cfg.stringify(config));
     }

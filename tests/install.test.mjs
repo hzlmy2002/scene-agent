@@ -39,7 +39,45 @@ test('npm/npx installs persist a pinned command rather than disposable cache pat
  for(const client of ['codex','claude-code','hermes']){
  const entry=launchEntry(client,path.join('/temporary','npm-cache','_npx','hash','node_modules','@aisa','web-market'));
  assert.equal(entry.command,process.platform==='win32'?'npx.cmd':'npx');
- assert.deepEqual(entry.args,['-y','@hzlmy2002/web-market@0.1.0','serve']);
+ assert.deepEqual(entry.args,['-y','@hzlmy2002/web-market@0.1.1','serve']);
  assert.ok(!JSON.stringify(entry).includes('npm-cache'));
  }
+});
+for(const client of ['codex','claude-code','hermes']) test(`${client}: saved key survives setup and is absent from installer state`,async()=>{
+ const home=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'aisa-key-')));
+ try{
+ const fake='test-only-credential';
+ const result=await install(client,{home,resolveKey:async saved=>{assert.equal(saved,undefined);return fake;}});
+ const decode=client==='codex'?TOML.parse:client==='hermes'?YAML.parse:JSON.parse;
+ const config=decode(await fs.readFile(result.config,'utf8'));
+ const entry=(config.mcp_servers??config.mcpServers)['aisa-web-market'];
+ assert.deepEqual(entry.env,{AISA_API_KEY:fake});assert.equal(entry.env_vars,undefined);
+ assert.ok(!(await fs.readFile(path.join(home,'.aisa/web-market',`${client}.json`),'utf8')).includes(fake));
+ await install(client,{home,resolveKey:async saved=>{assert.equal(saved,fake);return saved;}});
+ await install(client,{home});
+ await install(client,{home,remove:true});
+ assert.ok(!(await fs.readFile(result.config,'utf8')).includes(fake));
+ }finally{await fs.rm(home,{recursive:true,force:true});}
+});
+test('cancelled credential prompt does not install skills or config',async()=>{
+ const home=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'aisa-cancel-')));
+ try{
+ await assert.rejects(install('codex',{home,resolveKey:async()=>{throw Error('Setup cancelled.');}}),/cancelled/);
+ await assert.rejects(fs.access(path.join(home,'.codex/config.toml')));
+ await assert.rejects(fs.access(path.join(home,'.agents/skills/aisa-web-market/SKILL.md')));
+ }finally{await fs.rm(home,{recursive:true,force:true});}
+});
+test('CLI fails promptly without a terminal/key and supports environment-based setup',async()=>{
+ const {spawnSync}=await import('node:child_process');
+ const home=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'aisa-cli-key-')));
+ const env={...process.env};delete env.AISA_API_KEY;
+ try{
+ const args=['dist/cli.js','setup','--client','codex','--home',home];
+ const missing=spawnSync(process.execPath,args,{env,encoding:'utf8',timeout:5000});
+ assert.equal(missing.status,1);assert.match(missing.stderr,/interactive terminal/);
+ const configured=spawnSync(process.execPath,args,{env:{...env,AISA_API_KEY:'environment-test-key'},encoding:'utf8',timeout:5000});
+ assert.equal(configured.status,0,configured.stderr);
+ const content=await fs.readFile(path.join(home,'.codex/config.toml'),'utf8');
+ assert.ok(!content.includes('environment-test-key'));assert.match(content,/env_vars/);
+ }finally{await fs.rm(home,{recursive:true,force:true});}
 });
