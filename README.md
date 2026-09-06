@@ -4,6 +4,29 @@ Node/TypeScript stdio MCP for focused website competitive analysis. Five tools c
 
 OAuth support is currently in this source checkout; the pinned npm commands below refer to the earlier release. Use the local commands to test OAuth until a new version is published.
 
+## Install with your agent
+
+Copy the following prompt into Codex or another agent that can run commands on your computer. It uses the latest published npm package.
+
+```text
+Install and configure AIsa Web Market on this computer for me using the published npm package: @hzlmy2002/web-market.
+
+I am not technical. Please complete the installation yourself and involve me only when necessary.
+
+1. Check whether Node.js 22 or newer and npm are installed. If missing, install them using an official method suitable for my operating system. Explain any system permission I need to approve.
+2. From my home directory, run this command in an interactive terminal:
+   npx -y @hzlmy2002/web-market@latest setup
+3. Let setup detect and configure the supported agent clients. Reuse existing installations and credentials, and preserve my other settings.
+4. If OAuth opens, tell me to finish signing in through my browser. If automatic callback fails, guide me to paste the complete callback URL directly into the setup terminal. If necessary, use the API Key fallback with hidden terminal input. Never ask me to paste credentials or callback URLs into this conversation.
+5. Verify that the MCP server starts, its five tools are available, and its Skill is installed. Do not make paid API calls just to test installation.
+
+Use the published package's help output if needed. Do not clone the source repository or assume unreleased features are available.
+
+Keep going until installation is complete or a step genuinely requires my attention. If you cannot access my local computer or an interactive terminal, explain the limitation and give me the smallest possible next step.
+
+Finish with a brief explanation of which clients were configured and whether I need to restart or refresh them.
+```
+
 ## Quick start (current source)
 
 ```sh
