@@ -39,7 +39,7 @@ test('npm/npx installs persist a pinned command rather than disposable cache pat
  for(const client of ['codex','claude-code','hermes']){
  const entry=launchEntry(client,path.join('/temporary','npm-cache','_npx','hash','node_modules','@aisa','web-market'));
  assert.equal(entry.command,process.platform==='win32'?'npx.cmd':'npx');
- assert.deepEqual(entry.args,['-y','@hzlmy2002/web-market@0.1.1','serve']);
+ assert.deepEqual(entry.args,['-y','@hzlmy2002/web-market@0.1.2','serve']);
  assert.ok(!JSON.stringify(entry).includes('npm-cache'));
  }
 });

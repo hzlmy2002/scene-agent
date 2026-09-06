@@ -46,3 +46,12 @@ export async function resolveSetupKey(savedKey?: string): Promise<string | undef
   if (process.env.AISA_API_KEY?.trim()) return undefined;
   return promptKey();
 }
+
+export function sharedSetupKeyResolver(resolve = resolveSetupKey) {
+  let requested: Promise<string | undefined> | undefined;
+  return (savedKey?: string): Promise<string | undefined> => {
+    // Keep each client's existing credentials. Share only the newly requested key.
+    if (savedKey?.trim()) return Promise.resolve(savedKey);
+    return requested ??= resolve();
+  };
+}

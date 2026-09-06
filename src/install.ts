@@ -6,6 +6,24 @@ import {fileURLToPath} from 'node:url';
 import TOML from '@iarna/toml';
 import YAML from 'yaml';
 export type Client = 'codex' | 'claude-code' | 'hermes';
+export async function detectClients(home = homedir()): Promise<Client[]> {
+  const markers: [Client, string, 'directory' | 'file'][] = [
+    ['codex', '.codex', 'directory'],
+    ['claude-code', '.claude', 'directory'],
+    ['claude-code', '.claude.json', 'file'],
+    ['hermes', '.hermes', 'directory'],
+  ];
+  const found = new Set<Client>();
+  for (const [client, relative, kind] of markers) {
+    try {
+      const stat = await fs.stat(path.resolve(home, relative));
+      if (kind === 'directory' ? stat.isDirectory() : stat.isFile()) found.add(client);
+    } catch (error: any) {
+      if (error.code !== 'ENOENT' && error.code !== 'ENOTDIR') throw error;
+    }
+  }
+  return [...found];
+}
 export const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const skillName = 'aisa-web-market';
 // npm/npx installations live in node_modules. Persist a version-pinned registry
@@ -13,7 +31,7 @@ const skillName = 'aisa-web-market';
 // local Node entry so development changes remain immediately testable.
 export function launchEntry(client: Client, root = packageRoot) {
   const command = root.split(path.sep).includes('node_modules')
-    ? {command: process.platform === 'win32' ? 'npx.cmd' : 'npx', args: ['-y', '@hzlmy2002/web-market@0.1.1', 'serve']}
+    ? {command: process.platform === 'win32' ? 'npx.cmd' : 'npx', args: ['-y', '@hzlmy2002/web-market@0.1.2', 'serve']}
     : {command: process.execPath, args: [path.join(root, 'dist/cli.js'), 'serve']};
   return {...command, ...(client === 'codex' ? {env_vars: ['AISA_API_KEY']} : {})};
 }
@@ -66,7 +84,7 @@ export async function install(client: Client, options: {home?: string; remove?: 
     const root = skillRoot(client, home);
     const entry = launchEntry(client);
     const writes = new Map<string, string | undefined>();
-    const next: any = {version: '0.1.1', files: {}, config: previous.config, configHash: previous.configHash};
+    const next: any = {version: '0.1.2', files: {}, config: previous.config, configHash: previous.configHash};
     const bundled = await skillFiles(path.join(packageRoot, 'skills', skillName));
     for (const relative of new Set([...Object.keys(bundled), ...Object.keys(previous.files)])) {
       if (path.isAbsolute(relative) || relative.split(/[\\/]/).includes('..')) throw Error('Invalid installer state path.');

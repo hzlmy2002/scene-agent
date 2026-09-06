@@ -1,6 +1,6 @@
 {
   "name": "@hzlmy2002/web-market",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Focused website competitive analysis: five MCP tools and a portable skill",
   "type": "module",
   "bin": {

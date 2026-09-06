@@ -7,12 +7,22 @@ Node/TypeScript stdio MCP for focused website competitive analysis. Five tools c
 Requires Node 22 or newer. Run one of these commands in a terminal:
 
 ```sh
-npx -y @hzlmy2002/web-market@0.1.1 setup --client codex
-npx -y @hzlmy2002/web-market@0.1.1 setup --client claude-code
-npx -y @hzlmy2002/web-market@0.1.1 setup --client hermes
+npx -y @hzlmy2002/web-market@0.1.2 setup --client codex
+npx -y @hzlmy2002/web-market@0.1.2 setup --client claude-code
+npx -y @hzlmy2002/web-market@0.1.2 setup --client hermes
 ```
 
-This installs the Skill and registers a version-pinned `npx -y @hzlmy2002/web-market@0.1.1 serve` MCP command. Clearing the npm cache does not invalidate the configured path: npx downloads the pinned release again when necessary. Restart or refresh the client to discover the Skill. If no key is configured, setup prompts for hidden input and saves the key in the selected client’s MCP `env.AISA_API_KEY` setting. This works independently of shell startup files on macOS, Linux, and Windows. Existing saved keys are reused. If `AISA_API_KEY` is already set in the setup environment, setup keeps using environment-based authentication without copying the key; the client must inherit that variable. Non-interactive setup without a saved or environment key exits with instructions. Use `uninstall --client ...` to remove an unchanged managed installation.
+This installs the Skill and registers a version-pinned `npx -y @hzlmy2002/web-market@0.1.2 serve` MCP command. Clearing the npm cache does not invalidate the configured path: npx downloads the pinned release again when necessary. Restart or refresh the client to discover the Skill. If no key is configured, setup prompts for hidden input and saves the key in the selected client’s MCP `env.AISA_API_KEY` setting. This works independently of shell startup files on macOS, Linux, and Windows. Existing saved keys are reused. If `AISA_API_KEY` is already set in the setup environment, setup keeps using environment-based authentication without copying the key; the client must inherit that variable. Non-interactive setup without a saved or environment key exits with instructions. Use `uninstall --client ...` to remove an unchanged managed installation.
+
+When testing the published release from this source repository, first change to another directory (for example, `cd ~`). npm exec/npx can select the current project when its name and version match the requested package, but a source checkout has no installed `aisa-web-market` command link. This results in `sh: aisa-web-market: command not found`. Alternatively, use the local setup command below after building.
+
+## Automatic client detection
+
+Run `npx -y @hzlmy2002/web-market@0.1.2 setup` to install for every detected client. From a built source checkout, use `node dist/cli.js setup`. Detection checks `.codex/`, `.claude/` or `.claude.json`, and `.hermes/` in the user's home directory (or `--home`). These are usage traces, not proof that the executable is still installed. Shared `.agents/` directories alone do not count as detection.
+
+Use `--client` to select a single client or install before its first run. If nothing is detected, setup explains how to proceed without creating client configurations. Custom client configuration roots are not discovered automatically. A newly entered key is requested once and reused for clients needing a key; existing client keys remain in place. Installation results are reported per client; a failure does not undo successful installations, and any failure produces a nonzero exit status. Uninstall still requires `--client`.
+
+Automatic detection is available starting with version 0.1.2. Windows uses the same home-directory markers, but the full workflow has not yet been tested on a Windows machine.
 
 ## Local setup
 
