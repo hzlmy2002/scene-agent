@@ -1,4 +1,5 @@
 import {emitKeypressEvents} from 'node:readline';
+import {authFile, readSession, login} from './oauth.js';
 
 // Read from the terminal without echoing credentials or consuming MCP stdin.
 export async function promptKey(): Promise<string> {
@@ -53,5 +54,33 @@ export function sharedSetupKeyResolver(resolve = resolveSetupKey) {
     // Keep each client's existing credentials. Share only the newly requested key.
     if (savedKey?.trim()) return Promise.resolve(savedKey);
     return requested ??= resolve();
+  };
+}
+
+export type SetupCredential = string | {oauthFile: string} | undefined;
+export function setupCredentialResolver(options: {home?: string; auth?: string; noBrowser?: boolean}, io = {
+  login, promptKey,
+  interactive: () => Boolean(process.stdin.isTTY && process.stderr.isTTY),
+  report: (message: string) => {process.stderr.write(message + '\n');},
+}) {
+  if (options.auth && !['oauth', 'key'].includes(options.auth)) throw Error('Choose --auth oauth or key.');
+  let pending: Promise<SetupCredential> | undefined;
+  const file = authFile(options.home);
+  return (savedKey?: string): Promise<SetupCredential> => {
+    if (!options.auth && savedKey?.trim()) return Promise.resolve(savedKey);
+    if (!options.auth && process.env.AISA_API_KEY?.trim()) return Promise.resolve(undefined);
+    return pending ??= (async () => {
+      if (!options.auth && await readSession(file)) return {oauthFile: file};
+      if (options.auth === 'key') return process.env.AISA_API_KEY?.trim() || await io.promptKey();
+      if (!io.interactive()) throw Error('No credentials. Run setup in an interactive terminal for OAuth, or set AISA_API_KEY.');
+      try {
+        await io.login(file, options.noBrowser);
+      } catch (error) {
+        io.report(error instanceof Error ? error.message : 'OAuth login failed.');
+        io.report('Use an API Key instead (Ctrl+C to cancel setup).');
+        return await io.promptKey();
+      }
+      return {oauthFile: file};
+    })();
   };
 }

@@ -1,3 +1,4 @@
+import {accessToken} from './oauth.js';
 export type Row = Record<string, any>;
 export class ApiError extends Error {
   constructor(public code: string, message: string, public retryable = false, public status?: number) { super(message); }
@@ -14,13 +15,16 @@ export function safeError(error: unknown): ApiError {
   return error instanceof ApiError ? error : new ApiError('internal_error', 'The operation could not be completed.');
 }
 export class ApiClient implements Transport {
-  constructor(private key = process.env.AISA_API_KEY, private fetcher: typeof fetch = fetch) {}
+  constructor(private key = process.env.AISA_AUTH_FILE ? undefined : process.env.AISA_API_KEY, private fetcher: typeof fetch = fetch) {}
   async get(path: Endpoint, query: Row, cap?: number, signal?: AbortSignal): Promise<Row> {
-    if (!this.key?.trim()) throw new ApiError('missing_credentials', 'Set AISA_API_KEY in the MCP server environment and restart the server.');
+    let token: string | undefined;
+    try {token = this.key?.trim() || await accessToken();}
+    catch {throw new ApiError('authentication_required', 'OAuth credentials could not be refreshed. Run setup --auth oauth to sign in again.');}
+    if (!token) throw new ApiError('missing_credentials', 'Run setup to sign in with OAuth or configure AISA_API_KEY.');
     if (!Object.values(paths).includes(path)) throw new ApiError('invalid_input', 'Unsupported API operation.');
     const url = new URL('https://api.aisa.one/apis/v1' + path);
     for (const [k, v] of Object.entries(query)) if (v !== undefined) url.searchParams.set(k, String(v));
-    const headers: Record<string, string> = {Authorization: `Bearer ${this.key.trim()}`, Accept: 'application/json'};
+    const headers: Record<string, string> = {Authorization: `Bearer ${token}`, Accept: 'application/json'};
     if (cap !== undefined) headers['X-AISA-Max-Price-USD'] = String(cap);
     try {
       // No automatic retries: a timed-out billable request may already have succeeded.
@@ -66,7 +70,7 @@ export class ApiClient implements Transport {
         }
         const codes: Record<number, [string, string, boolean]> = {
           400: ['invalid_input', 'AIsa rejected the query scope or parameters.', false],
-          401: ['unauthorized', 'AIsa rejected the API key. Check AISA_API_KEY.', false],
+          401: ['unauthorized', 'AIsa rejected the credentials. Run setup --auth oauth to sign in again, or check AISA_API_KEY.', false],
           402: ['payment_required', 'AIsa requires sufficient credit and the appropriate subscription. Check your AIsa account.', false],
           403: ['forbidden', 'The account cannot access this data scope.', false],
           404: ['not_found', 'HTTP 404 returned by AIsa or its data provider. The response does not establish whether the route is unavailable or the requested resource/data was not found.', false],

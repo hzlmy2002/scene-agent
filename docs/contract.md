@@ -18,7 +18,9 @@ Traffic algorithm traffic-derived-v1 compares requested endpoints only, leaves g
 
 Bearer, request headers and arbitrary upstream error bodies are not returned. 402 is payment_required because the gateway can use it for subscription or credit restrictions. No per-endpoint prices are hardcoded. max_price_usd is divided among planned calls; tiny budgets that round to zero fail before requests. A network interruption is not automatically replayed.
 
-Remaining integration limits: no OAuth, no automatic publication-date discovery, no organic/nonbranded keyword filters, no live price estimation, no durable query cache, no interactive-client evals. See live-verification-2026-09-05.md for test-account evidence. HTTP bearer requests and sample parsing are verified using fixtures, including the docs' example envelopes.
+OAuth login uses Clerk DCR and PKCE with shared local credentials and automatic refresh. Token exchange and refresh have simulated integration coverage; live account authorization remains unverified.
+
+Remaining integration limits: no automatic publication-date discovery, no organic/nonbranded keyword filters, no live price estimation, no durable query cache, no interactive-client evals. See live-verification-2026-09-05.md for test-account evidence. HTTP bearer requests and sample parsing are verified using fixtures, including the docs' example envelopes.
 
 404 diagnostics: only the known gateway error `api endpoint not found` maps to unavailable_operation. Other 404 responses map to not_found without assuming route disablement, account permissions or missing domain data. Tool errors include http_status when known; arbitrary upstream messages are never forwarded. The aisa-mcp catalogue includes website-top-geographies but explicitly excludes website/traffic-geography and website/folders based on its 2026-08-26 production checks. This historical catalogue is not a live availability guarantee.
 

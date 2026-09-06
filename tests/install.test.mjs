@@ -56,7 +56,7 @@ for(const client of ['codex','claude-code','hermes']) test(`${client}: saved key
  await install(client,{home,resolveKey:async saved=>{assert.equal(saved,fake);return saved;}});
  await install(client,{home});
  await install(client,{home,remove:true});
- assert.ok(!(await fs.readFile(result.config,'utf8')).includes(fake));
+ await assert.rejects(fs.access(result.config), {code:'ENOENT'});
  }finally{await fs.rm(home,{recursive:true,force:true});}
 });
 test('cancelled credential prompt does not install skills or config',async()=>{

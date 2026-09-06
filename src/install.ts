@@ -1,3 +1,4 @@
+import type {SetupCredential} from './credentials.js';
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import {createHash, randomUUID} from 'node:crypto';
@@ -23,6 +24,16 @@ export async function detectClients(home = homedir()): Promise<Client[]> {
     }
   }
   return [...found];
+}
+// Only installations with our ownership record are offered for removal.
+export async function installedClients(home = homedir()): Promise<Client[]> {
+  const found: Client[] = [];
+  for (const client of ['codex', 'claude-code', 'hermes'] as Client[]) {
+    try {
+      if ((await fs.lstat(path.resolve(home, '.aisa/web-market', `${client}.json`))).isFile()) found.push(client);
+    } catch (error: any) {if (error.code !== 'ENOENT' && error.code !== 'ENOTDIR') throw error;}
+  }
+  return found;
 }
 export const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const skillName = 'aisa-web-market';
@@ -68,7 +79,7 @@ async function skillFiles(root: string, prefix = ''): Promise<Record<string, str
   }
   return out;
 }
-export async function install(client: Client, options: {home?: string; remove?: boolean; skillsOnly?: boolean; resolveKey?: (savedKey?: string) => Promise<string | undefined>} = {}) {
+export async function install(client: Client, options: {home?: string; remove?: boolean; skillsOnly?: boolean; resolveKey?: (savedKey?: string) => Promise<SetupCredential>} = {}) {
   if (!['codex', 'claude-code', 'hermes'].includes(client)) throw Error('Choose --client codex, claude-code or hermes.');
   const home = path.resolve(options.home ?? homedir());
   const stateDir = path.join(home, '.aisa/web-market');
@@ -111,20 +122,21 @@ export async function install(client: Client, options: {home?: string; remove?: 
       if (options.remove) {
         if (existing && !owned) throw Error('MCP entry has been modified; preserving it.');
         delete config[cfg.key][skillName];
+        if (!Object.keys(config[cfg.key]).length) delete config[cfg.key];
       } else {
         if (existing && !owned && JSON.stringify(existing) !== JSON.stringify(entry)) throw Error('An unowned aisa-web-market MCP entry already exists; preserving it.');
         const savedKey = typeof existing?.env?.AISA_API_KEY === 'string' ? existing.env.AISA_API_KEY : undefined;
         const apiKey = options.resolveKey ? await options.resolveKey(savedKey) : savedKey;
         const configured: any = {...entry};
         if (apiKey) {
-          configured.env = {AISA_API_KEY: apiKey};
+          configured.env = typeof apiKey === 'string' ? {AISA_API_KEY: apiKey} : {AISA_AUTH_FILE: apiKey.oauthFile};
           delete configured.env_vars;
         }
         config[cfg.key][skillName] = configured;
         delete next.config;
         next.configHash = hash(JSON.stringify(configured));
       }
-      writes.set(cfg.file, cfg.stringify(config));
+      writes.set(cfg.file, options.remove && !Object.keys(config).length ? undefined : cfg.stringify(config));
     }
     writes.set(stateFile, options.remove ? undefined : JSON.stringify(next, null, 2));
     const backups = new Map<string, string | undefined>();

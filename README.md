@@ -1,8 +1,26 @@
 # AIsa Web Market
 
-Node/TypeScript stdio MCP for focused website competitive analysis. Five tools call **AIsa REST APIs directly**, with user-supplied Bearer authentication. No dependency on the Python aisa-mcp server, OAuth, or model calls inside tools.
+Node/TypeScript stdio MCP for focused website competitive analysis. Five tools call **AIsa REST APIs directly**, with OAuth or API Key Bearer authentication. No dependency on the Python aisa-mcp server or model calls inside tools.
 
-## Install with npx
+OAuth support is currently in this source checkout; the pinned npm commands below refer to the earlier release. Use the local commands to test OAuth until a new version is published.
+
+## Quick start (current source)
+
+```sh
+npm ci
+npm run build
+node dist/cli.js setup
+```
+
+Setup detects all supported clients and starts OAuth when no credentials are available. Finish in the browser, paste the complete callback URL into the terminal, or type `key` for API Key fallback. Existing credentials are reused. To remove the installation:
+
+```sh
+node dist/cli.js uninstall
+```
+
+The first menu entry is `0` for all installations; `1`, `2`, etc. select clients, and Enter cancels. Removing the last client clears local OAuth credentials, managed configuration, Skills and installation state, and attempts refresh-token revocation. Files belonging to other tools are retained.
+
+## Earlier npm release (0.1.2)
 
 Requires Node 22 or newer. Run one of these commands in a terminal:
 
@@ -20,7 +38,7 @@ When testing the published release from this source repository, first change to 
 
 Run `npx -y @hzlmy2002/web-market@0.1.2 setup` to install for every detected client. From a built source checkout, use `node dist/cli.js setup`. Detection checks `.codex/`, `.claude/` or `.claude.json`, and `.hermes/` in the user's home directory (or `--home`). These are usage traces, not proof that the executable is still installed. Shared `.agents/` directories alone do not count as detection.
 
-Use `--client` to select a single client or install before its first run. If nothing is detected, setup explains how to proceed without creating client configurations. Custom client configuration roots are not discovered automatically. A newly entered key is requested once and reused for clients needing a key; existing client keys remain in place. Installation results are reported per client; a failure does not undo successful installations, and any failure produces a nonzero exit status. Uninstall still requires `--client`.
+Use `--client` to select a single client or install before its first run. If nothing is detected, setup explains how to proceed without creating client configurations. Custom client configuration roots are not discovered automatically. A new OAuth login or API Key fallback is requested once per setup and shared across clients needing credentials; existing client keys remain in place. Installation results are reported per client; a failure does not undo successful installations, and any failure produces a nonzero exit status. Run `uninstall` for an interactive selection of managed installations; `--client` remains available for scripts.
 
 Automatic detection is available starting with version 0.1.2. Windows uses the same home-directory markers, but the full workflow has not yet been tested on a Windows machine.
 
@@ -34,9 +52,23 @@ npm test
 npm run build
 ```
 
-Setup prompts for a missing AIsa API key and stores it as plaintext in the selected client configuration, with restrictive file permissions where supported. It is never printed or copied into Skills or installer state. This is a temporary Bearer authentication flow ahead of OAuth support. Setup does not edit shell profiles or Windows user environment variables. Alternatively, set `AISA_API_KEY` in the environment inherited by your MCP client. Desktop applications may not inherit variables exported in a terminal.
+Setup reuses existing credentials. When none are available, it starts **OAuth automatically**, without a method-selection prompt. Type `key` while waiting for the callback to switch to hidden API Key input. OAuth failure or cancellation also falls back to API Key input; press Ctrl+C there to cancel setup. Use `--auth` to explicitly switch an existing installation:
 
-Run one of these from this checkout:
+```sh
+node dist/cli.js setup --auth oauth
+node dist/cli.js setup --auth oauth --no-browser
+node dist/cli.js setup --auth key
+```
+
+OAuth dynamically registers a public client with Clerk, uses PKCE S256, opens the browser and receives a loopback callback. The authorization URL is also printed. You may paste the **complete callback URL** into the terminal instead. On a different device, the localhost page may fail to load: copy its full URL from the address bar and paste it in the original terminal. `--no-browser` does not launch a browser or bind a local port; it uses manual paste only. Login times out after five minutes. Paste callbacks only into the setup terminal, never into an agent conversation.
+
+OAuth credentials are saved in `~/.aisa/oauth.json` (under `--home` when supplied), using atomic replacement and restrictive file permissions where supported. Client configurations contain only `AISA_AUTH_FILE`, pointing to that file. All installed clients share one login. The runtime refreshes expiring tokens with a cross-process file lock; it never opens a browser during MCP tool calls. A failed refresh requires `setup --auth oauth`. A provider that does not issue a refresh token requires login again after expiry. Removing the last managed client deletes local OAuth credentials and attempts refresh-token revocation. Partial uninstall keeps credentials for remaining clients. Switching to API Key preserves that OAuth file too.
+
+API Key input is hidden and saved in the selected client's `env.AISA_API_KEY`. Existing client keys are preserved unless `--auth` explicitly selects a method. An environment key is reused without copying it by default; explicit `--auth key` saves it to the selected clients. Setup does not edit shell profiles or Windows environment settings. Headless OAuth still requires an interactive terminal for pasting; unattended installs should use `AISA_API_KEY`.
+
+The browser launcher supports macOS, Linux and Windows; the Windows workflow has not been tested on a Windows machine. Real Clerk discovery, public-client registration and authorization redirect have been checked. Token exchange and refresh are covered by simulated integration tests; end-to-end account authorization still needs live verification.
+
+The normal command is `node dist/cli.js setup`. To target a specific client before its first run:
 
 ```sh
 node dist/cli.js setup --client codex
@@ -54,14 +86,16 @@ Setup installs the Skill and merges a user-level MCP entry using the absolute No
 
 Refresh/restart the client after installation if the skill is not visible. Setup follows the actual user's home directory; use `--home /absolute/path` for an isolated profile or testing. Symlinked installation paths are refused to avoid writing outside the selected location. For Hermes custom profiles, pass the matching profile home explicitly; otherwise setup targets `~/.hermes`.
 
-To use MCP-only configuration, set `command` to your Node executable and `args` to the absolute path to `dist/cli.js`, followed by `serve`. Pass `AISA_API_KEY` through the client environment. To install the skill during server startup, add `--install-skills --client codex` (or another supported client). This is an explicit opt-in, runs idempotently, and writes status only to stderr; the first session may require a refresh for skill discovery.
+To use MCP-only configuration, set `command` to your Node executable and `args` to the absolute path to `dist/cli.js`, followed by `serve`. Run OAuth setup first, or pass `AISA_API_KEY` through the client environment. To install the skill during server startup, add `--install-skills --client codex` (or another supported client). This is an explicit opt-in, runs idempotently, and writes status only to stderr; the first session may require a refresh for skill discovery.
 
 ```sh
 node dist/cli.js status
-node dist/cli.js uninstall --client codex
+node dist/cli.js uninstall
 ```
 
-Uninstall removes only matching owned files and the matching MCP entry. It preserves other tools and settings. A modified owned file stops uninstall for review. It may leave empty directories. To update, rebuild this checkout and rerun setup.
+Interactive uninstall lists managed client installations and accepts numbers (such as `1,2`), `0` for all, or Enter / Ctrl+C to cancel. `0` is displayed first. It describes the removal scope before selection. The menu is also available with no remaining managed clients so orphan OAuth credentials can be cleaned. Non-interactive callers must specify `--client`.
+
+Uninstall removes only matching owned files and the matching MCP entry. It preserves other tools and settings. A modified owned file stops uninstall for review. It removes empty managed Skill directories and, after the last removal, the local OAuth file and empty installer directories. Other user files are preserved. Remote revocation failures are reported; local deletion does not guarantee removal of the DCR application record or immediate invalidation of already-issued access tokens. To update, rebuild this checkout and rerun setup.
 
 ## Tools
 
@@ -95,13 +129,13 @@ Generates `plugins/{codex,claude-code,hermes}/aisa-web-market/`, each with the s
 
 - Codex: `.codex-plugin/plugin.json` plus `.mcp.json`; distribute using the client's local/plugin marketplace workflow.
 - Claude Code: `.claude-plugin/plugin.json` plus `.mcp.json`; local test with `claude --plugin-dir /absolute/path/to/plugins/claude-code/aisa-web-market`.
-- Hermes: Agent Plugins v1 `plugin.json` plus `mcp.json`; requires a version supporting portable packages. Enable after installing through Hermes. Configure AISA_API_KEY in the Hermes process environment.
+- Hermes: Agent Plugins v1 `plugin.json` plus `mcp.json`; requires a version supporting portable packages. Enable after installing through Hermes. Use the shared local OAuth login or configure AISA_API_KEY in the Hermes process environment.
 
 Prefer either plugin installation or direct setup for a client, to avoid duplicate skills and tools. Plugin host discovery has not been tested in interactive Codex/Claude/Hermes sessions. The bundled runtime is tested over real stdio, and setup configuration is tested in isolated profiles.
 
 ## Development and release
 
-`npm test` exercises API contracts, calculations, failures, installer preservation and real stdio protocol exchange without network calls or credits. `npm pack` creates an installable npm archive. The scoped package is configured for public npm publication. npm-installed setup registers a pinned npx command; setup from a source checkout registers its local Node entry. Plugin bundles remain a separate distribution option.
+`npm test` exercises API contracts, calculations, failures, installer preservation and real stdio protocol exchange without external network calls or credits (OAuth tests use a temporary loopback listener). `npm pack` creates an installable npm archive. The scoped package is configured for public npm publication. npm-installed setup registers a pinned npx command; setup from a source checkout registers its local Node entry. Plugin bundles remain a separate distribution option.
 
 `docs/contract.md` records the endpoint mapping and limits. `docs/upstream-snapshot.json` captures only the required operation definitions and examples from the supplied docs checkout. Run `node scripts/check-contract.mjs /path/to/docs/openapi/similarweb.json` to detect drift in those operations. Live API verification requires an explicitly selected funded account and month; no production calls are made by the test suite.
 

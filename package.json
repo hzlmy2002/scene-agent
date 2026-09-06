@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "test": "npm run build && node --import ./tests/isolate-env.mjs --test tests/*.test.mjs",
     "check": "tsc --noEmit",
     "prepack": "npm run build",
     "plugins": "npm run build && node scripts/package-plugins.mjs"
